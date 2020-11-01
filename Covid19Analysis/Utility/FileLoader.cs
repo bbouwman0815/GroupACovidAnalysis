@@ -7,7 +7,7 @@ using Covid19Analysis.Model;
 namespace Covid19Analysis.Utility
 {
     /// <summary>
-    ///     The file loader class allows the user to choose a Csv file to load
+    ///     The file loader class allows the user to choose a CSV file to load
     /// </summary>
     public class FileLoader
     {
