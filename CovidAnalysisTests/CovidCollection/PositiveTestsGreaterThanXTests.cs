@@ -18,9 +18,9 @@ namespace CovidAnalysisTests
         {
             var data = new TotalCovidStats();
 
-            var day1 = new DailyCovidStat(new DateTime(2020, 8, 15), "GA", 499, 100, 100, 100);
-            var day2 = new DailyCovidStat(new DateTime(2020, 8, 16), "GA", 500, 100, 100, 100);
-            var day3 = new DailyCovidStat(new DateTime(2020, 8, 17), "GA", 501, 100, 100, 100);
+            var day1 = new DailyCovidStat(new DateTime(2020, 8, 15), "GA", 499, 0, 100, 100, 100);
+            var day2 = new DailyCovidStat(new DateTime(2020, 8, 16), "GA", 500, 0, 100, 100, 100);
+            var day3 = new DailyCovidStat(new DateTime(2020, 8, 17), "GA", 501, 0, 100, 100, 100);
 
             data.Add(day1);
             data.Add(day2);
@@ -36,7 +36,7 @@ namespace CovidAnalysisTests
         {
             var data = new TotalCovidStats();
 
-            var day = new DailyCovidStat(new DateTime(2020, 8, 15), "GA", 501, 100, 100, 100);
+            var day = new DailyCovidStat(new DateTime(2020, 8, 15), "GA", 501, 0, 100, 100, 100);
             data.Add(day);
 
             var total = CalculateAverages.CalculatePositiveTestsGreaterThanX(data, 500);
