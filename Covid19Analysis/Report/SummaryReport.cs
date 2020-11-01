@@ -61,7 +61,7 @@ namespace Covid19Analysis.Report
         /// <value>
         ///     The Region Data.
         /// </value>
-        public RegionalCovidStats RegionData { get; set; }
+        public Dictionary<string, List<DailyCovidStat>> RegionData { get; set; }
 
         /// <summary>
         ///     Gets or sets the monthly Data.
@@ -69,7 +69,7 @@ namespace Covid19Analysis.Report
         /// <value>
         ///     The monthly Data.
         /// </value>
-        public MonthlyCovidStats MonthlyData { get; set; }
+        public Dictionary<string, List<DailyCovidStat>> MonthlyData { get; set; }
 
         /// <summary>
         ///     Gets or sets the number formatter.
@@ -116,8 +116,8 @@ namespace Covid19Analysis.Report
         {
             this.Region = region;
             this.CovidData = data;
-            this.RegionData = new RegionalCovidStats();
-            this.MonthlyData = new MonthlyCovidStats();
+            this.RegionData = new Dictionary<string, List<DailyCovidStat>>();
+            this.MonthlyData = new Dictionary<string, List<DailyCovidStat>>();
             this.NumberFormatter = new NumberFormatInfo();
             this.LowerBound = DefaultLowerBound;
             this.UpperBound = DefaultUpperBound;
@@ -136,8 +136,8 @@ namespace Covid19Analysis.Report
         {
             this.Region = region;
             this.CovidData = data;
-            this.RegionData = new RegionalCovidStats();
-            this.MonthlyData = new MonthlyCovidStats();
+            this.RegionData = new Dictionary<string, List<DailyCovidStat>>();
+            this.MonthlyData = new Dictionary<string, List<DailyCovidStat>>();
             this.NumberFormatter = new NumberFormatInfo();
             this.LowerBound = lowerBound;
             this.UpperBound = upperBound;
@@ -160,8 +160,8 @@ namespace Covid19Analysis.Report
 
             if (this.CovidData.ContainsTestData())
             {
-                this.RegionData.Data = this.CovidData.CreateRegionalDictionary(this.CovidData.ToList());
-                this.MonthlyData.Data = this.CovidData.CreateMonthlyDictionary(this.RegionData.Data[this.Region]);
+                this.RegionData = this.CovidData.CreateRegionalDictionary(this.CovidData.ToList());
+                this.MonthlyData = this.CovidData.CreateMonthlyDictionary(this.RegionData[this.Region]);
 
                 var monthlySummary =
                     MonthlyReport.GenerateMonthlyDataReport(this.RegionData, this.MonthlyData, this.Region);
@@ -206,7 +206,7 @@ namespace Covid19Analysis.Report
             summary += Environment.NewLine;
             summary += Environment.NewLine;
 
-            summary += this.generatePositiveCaseHistogram(this.RegionData.Data[this.Region]);
+            summary += this.generatePositiveCaseHistogram(this.RegionData[this.Region]);
 
             return summary;
         }
@@ -219,7 +219,7 @@ namespace Covid19Analysis.Report
         /// </returns>
         private string generateHighestDataReport()
         {
-            var data = this.RegionData.Data[this.Region];
+            var data = this.RegionData[this.Region];
 
             var summary = string.Empty;
 
@@ -312,7 +312,7 @@ namespace Covid19Analysis.Report
 
         private string generatePositivitySummary()
         {
-            var data = this.RegionData.Data[this.Region];
+            var data = this.RegionData[this.Region];
 
             var summary = string.Empty;
             var averagePosTests = CalculateAverages.CalculateAvgPosTestsSinceFirstPosTest(data);
@@ -341,7 +341,7 @@ namespace Covid19Analysis.Report
                 moreThan = DefaultUpperBound;
             }
 
-            var data = this.RegionData.Data[this.Region];
+            var data = this.RegionData[this.Region];
 
             var summary = string.Empty;
 

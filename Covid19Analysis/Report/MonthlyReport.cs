@@ -21,13 +21,13 @@ namespace Covid19Analysis.Report
         /// <returns>
         ///     the monthly Data report for a Region
         /// </returns>
-        public static string GenerateMonthlyDataReport(RegionalCovidStats regionData, MonthlyCovidStats monthData,
+        public static string GenerateMonthlyDataReport(Dictionary<string, List<DailyCovidStat>> regionData, Dictionary<string, List<DailyCovidStat>> monthData,
             string region)
         {
             var summary = string.Empty;
             summary += generateMonthlyTitle();
 
-            var data = regionData.Data[region];
+            var data = regionData[region];
 
             var minDay = FindMinMax.FindOldestPositiveCase(data);
             var min = minDay.Date.Month;
@@ -58,9 +58,9 @@ namespace Covid19Analysis.Report
             return summary;
         }
 
-        private static string generateDataForMonth(int month, MonthlyCovidStats data)
+        private static string generateDataForMonth(int month, Dictionary<string, List<DailyCovidStat>> data)
         {
-            var monthData = data.Data[month.ToString()];
+            var monthData = data[month.ToString()];
             var summary = string.Empty;
 
             if (monthData.Count > 0)
