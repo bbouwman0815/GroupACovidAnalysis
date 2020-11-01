@@ -3,7 +3,7 @@
 namespace Covid19Analysis.Model
 {
     /// <summary>
-    ///     Holds covid statistics for a specific Region on a specific Day
+    ///     Holds covid statistics for a specific Region on a specific day
     /// </summary>
     public class DailyCovidStat : IComparable<DailyCovidStat>
     {
