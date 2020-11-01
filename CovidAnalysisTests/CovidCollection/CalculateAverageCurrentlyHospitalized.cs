@@ -6,11 +6,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CovidAnalysisTests
 {
-    /// Input: {}              OutPut: ArgumentOutOfRangeException
-    /// Input: No Positive Tests at start   OutPut: Correct Average for 6 days
-    /// Input: No Positive Tests in middle  Output: Correct Average for 5 days
-    /// Input: No Positive Tests at end     Output: Correct Average for 5 days
-    /// Input: Gap of days between Data     Output: Correct Average for 5 days
+    /// Input: {}                               OutPut: ArgumentOutOfRangeException
+    /// Input: {125, 77, 55, 111, 144, 222}     OutPut: 122.33 repeating
+    /// Input: {0, 0, 123, 44, 208}             OutPut: 46.87
     [TestClass]
     public class CalculateAverageCurrentlyHospitalized
     {
@@ -27,16 +25,16 @@ namespace CovidAnalysisTests
         }
 
         [TestMethod]
-        public void TestWithNoPositiveTestsAtStartDays()
+        public void TestWithMultipleDays()
         {
             var data = new TotalCovidStats();
 
-            var day1 = new DailyCovidStat(new DateTime(2020, 8, 15), "GA", 0, 0, 0, 0, 0);
-            var day2 = new DailyCovidStat(new DateTime(2020, 8, 16), "GA", 0, 0, 0, 0, 0);
-            var day3 = new DailyCovidStat(new DateTime(2020, 8, 17), "GA", 100, 100, 50, 100, 100);
-            var day4 = new DailyCovidStat(new DateTime(2020, 8, 18), "GA", 200, 100, 150, 100, 100);
-            var day5 = new DailyCovidStat(new DateTime(2020, 8, 19), "GA", 300, 100, 100, 100, 100);
-            var day6 = new DailyCovidStat(new DateTime(2020, 8, 20), "GA", 400, 100, 100, 100, 100);
+            var day1 = new DailyCovidStat(new DateTime(2020, 8, 15), "GA", 0, 0, 125, 0, 0);
+            var day2 = new DailyCovidStat(new DateTime(2020, 8, 16), "GA", 0, 0, 77, 0, 0);
+            var day3 = new DailyCovidStat(new DateTime(2020, 8, 17), "GA", 100, 100, 55, 100, 100);
+            var day4 = new DailyCovidStat(new DateTime(2020, 8, 18), "GA", 200, 100, 111, 100, 100);
+            var day5 = new DailyCovidStat(new DateTime(2020, 8, 19), "GA", 300, 100, 144, 100, 100);
+            var day6 = new DailyCovidStat(new DateTime(2020, 8, 20), "GA", 400, 100, 222, 100, 100);
 
             data.Add(day1);
             data.Add(day2);
@@ -45,76 +43,34 @@ namespace CovidAnalysisTests
             data.Add(day5);
             data.Add(day6);
 
-            var averagePosTests = CalculateAverages.CalculateAvgPosTestsSinceFirstPosTest(data.ToList());
+            var averagePosTests = CalculateAverages.CalculateAverageCurrentlyHospitalized(data.ToList());
 
-            Assert.AreEqual(100, averagePosTests);
+            Assert.AreEqual(122.33, averagePosTests, .01);
         }
 
         [TestMethod]
-        public void TestWithNoPositiveTestsInMiddleOfDays()
+        public void TestWithMultipleDaysAndDateGap()
         {
             var data = new TotalCovidStats();
 
-            var day1 = new DailyCovidStat(new DateTime(2020, 8, 15), "GA", 100, 0, 100,0, 0);
-            var day2 = new DailyCovidStat(new DateTime(2020, 8, 16), "GA", 500, 0, 100, 0, 0);
-            var day3 = new DailyCovidStat(new DateTime(2020, 8, 17), "GA", 0, 100, 100, 100, 100);
-            var day4 = new DailyCovidStat(new DateTime(2020, 8, 18), "GA", 0, 100, 100, 100, 100);
-            var day5 = new DailyCovidStat(new DateTime(2020, 8, 19), "GA", 400, 100, 100, 100, 100);
-
+            var day1 = new DailyCovidStat(new DateTime(2020, 8, 12), "GA", 0, 0, 0, 0, 0);
+            var day2 = new DailyCovidStat(new DateTime(2020, 8, 16), "GA", 0, 0, 0, 0, 0);
+            var day3 = new DailyCovidStat(new DateTime(2020, 8, 17), "GA", 100, 100, 123, 100, 100);
+            var day4 = new DailyCovidStat(new DateTime(2020, 8, 18), "GA", 200, 100, 44, 100, 100);
+            var day5 = new DailyCovidStat(new DateTime(2020, 8, 19), "GA", 300, 100, 208, 100, 100);
+            
             data.Add(day1);
             data.Add(day2);
             data.Add(day3);
             data.Add(day4);
             data.Add(day5);
+            
+            var averagePosTests = CalculateAverages.CalculateAverageCurrentlyHospitalized(data.ToList());
 
-            var averagePosTests = CalculateAverages.CalculateAvgPosTestsSinceFirstPosTest(data.ToList());
-
-            Assert.AreEqual(200, averagePosTests);
+            Assert.AreEqual(46.87, averagePosTests, .01);
         }
 
-        [TestMethod]
-        public void TestWithNoPositiveTestsAtEnd()
-        {
-            var data = new TotalCovidStats();
 
-            var day1 = new DailyCovidStat(new DateTime(2020, 8, 15), "GA", 100, 0, 0, 0, 0);
-            var day2 = new DailyCovidStat(new DateTime(2020, 8, 16), "GA", 500, 0, 0, 0, 0);
-            var day3 = new DailyCovidStat(new DateTime(2020, 8, 17), "GA", 300, 0, 100, 100, 100);
-            var day4 = new DailyCovidStat(new DateTime(2020, 8, 18), "GA", 0, 0, 100, 100, 100);
-            var day5 = new DailyCovidStat(new DateTime(2020, 8, 19), "GA", 0, 0, 100, 100, 100);
-
-            data.Add(day1);
-            data.Add(day2);
-            data.Add(day3);
-            data.Add(day4);
-            data.Add(day5);
-
-            var averagePosTests = CalculateAverages.CalculateAvgPosTestsSinceFirstPosTest(data.ToList());
-
-            Assert.AreEqual(180, averagePosTests);
-        }
-
-        [TestMethod]
-        public void TestWithDateGap()
-        {
-            var data = new TotalCovidStats();
-
-            var day1 = new DailyCovidStat(new DateTime(2020, 8, 15), "GA", 600, 0, 0, 0, 0);
-            var day2 = new DailyCovidStat(new DateTime(2020, 8, 16), "GA", 500, 0, 0, 0, 0);
-            var day3 = new DailyCovidStat(new DateTime(2020, 8, 19), "GA", 300, 100, 0, 100, 100);
-            var day4 = new DailyCovidStat(new DateTime(2020, 8, 20), "GA", 0, 100, 0, 100, 100);
-            var day5 = new DailyCovidStat(new DateTime(2020, 8, 21), "GA", 0, 100, 0, 100, 100);
-
-            data.Add(day1);
-            data.Add(day2);
-            data.Add(day3);
-            data.Add(day4);
-            data.Add(day5);
-
-            var averagePosTests = CalculateAverages.CalculateAvgPosTestsSinceFirstPosTest(data.ToList());
-
-            Assert.AreEqual(200, averagePosTests);
-        }
 
         #endregion
     }
