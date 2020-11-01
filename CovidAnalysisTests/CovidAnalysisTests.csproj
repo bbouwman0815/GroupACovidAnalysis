@@ -120,9 +120,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CovidCollection\AddTests.cs" />
-    <Compile Include="CovidCollection\CalculateAveragePositiveTestsSinceFirstTests - Copy.cs" />
-    <Compile Include="CovidCollection\CalculateAverageCurrentlyHospitalized.cs" />
+    <Compile Include="CovidCollection\FindMinLowestTotalTests.cs" />
+    <Compile Include="CovidCollection\FindMaxPositiveTests.cs" />
+    <Compile Include="CovidCollection\CalculateAveragePositiveTestsSinceFirstTests.cs" />
+    <Compile Include="CovidCollection\CalculateAverageCurrentlyHospitalizedTests.cs" />
     <Compile Include="CovidCollection\FindDaysSamePositiveHighTests.cs" />
+    <Compile Include="CovidCollection\PositiveTestsLessThanXTests.cs" />
     <Compile Include="CovidCollection\PositiveTestsGreaterThanXTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTestApp.xaml.cs">
