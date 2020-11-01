@@ -1,0 +1,31 @@
+﻿<Page
+    x:Class="Covid19Analysis.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Covid19Analysis"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="433" Width="622">
+
+    <Grid>
+        <CommandBar>
+            <CommandBar.Content>
+                <Grid/>
+            </CommandBar.Content>
+            <AppBarButton Icon="openFile" Label="Load File" Click="loadFile_Click"/>
+
+        </CommandBar>
+        <TextBox x:Name="summaryTextBox" HorizontalAlignment="Left" Margin="12,67,0,0" VerticalAlignment="Top" TextWrapping="Wrap" Text="Summary" Height="276" Width="600" IsReadOnly="True" AutomationProperties.Name="summaryTextBlock" FontFamily="Consolas"/>
+        <TextBlock HorizontalAlignment="Left" Margin="12,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="COVID-19 Analysis"/>
+        <Button x:Name="getLowerBoundButton" Content="Set Lower Bound" Margin="486,348,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.046,0.647" Click="getLowerBoundButton_Click" Width="126"/>
+        <Button x:Name="getUpperBoundButton" Content="Set Upper Bound" Margin="486,385,0,0" VerticalAlignment="Top" Click="getUpperBoundButton_Click"/>
+        <Button x:Name="displayErrorsButton" Content="Display Errors" Margin="106,348,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.338,-0.869" Click="displayErrorsButton_Click" Width="112"/>
+        <Button x:Name="clearDataButton" Content="Clear Data" Margin="12,385,521,0" VerticalAlignment="Top" RenderTransformOrigin="-1.137,0.504" Click="clearDataButton_Click" HorizontalAlignment="Stretch"/>
+        <Button x:Name="addDataButton" Content="Add Data" Margin="12,348,0,0" VerticalAlignment="Top" Width="89" Click="addDataButton_Click" RenderTransformOrigin="1.292,0.656"/>
+        <Button x:Name="getHistogramButton" Content="Set Histogram bin" Margin="370,348,0,0" VerticalAlignment="Top" Width="111" Click="getHistogramButton_Click" />
+        <Button x:Name="saveDataButton" Content="Save Data" Margin="106,385,0,0" VerticalAlignment="Top" Width="112" Click="saveDataButton_Click"/>
+        <Button x:Name="selectStateButton" Content="Set State" Margin="370,385,0,0" VerticalAlignment="Top" Width="111" Click="SelectStateButton_OnClick"/>
+
+    </Grid>
+</Page>

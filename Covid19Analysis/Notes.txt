@@ -1,0 +1,3 @@
+﻿My filereader seems messy. I couldn't figure out how to make it function in its own class so I had to keep it in the Main. Its one of the things I want to figure out how to change
+Adding throw new NullReferenceException("Collection cannot be null."); to the Check :: CheckSpecificDuplicate method breaks the entire program.
+Still need to remove the 2 dictionary models and cleanup the summaries. Not enough time this Assignment
