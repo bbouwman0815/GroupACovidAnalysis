@@ -165,8 +165,7 @@ namespace Covid19Analysis.Model
         }
 
         /// <summary>
-        ///     Converts to string to return the Date, Region, NegTests, PosTests,
-        ///     Death, and Hospitalization details.
+        ///     Converts to string to return the Date and PosTests
         /// </summary>
         /// <returns>
         ///     A <see cref="System.String" /> that represents this instance.
@@ -176,8 +175,23 @@ namespace Covid19Analysis.Model
             var statisticDetails = string.Empty;
 
             statisticDetails += $"Date: {this.Date.ToShortDateString()}";
-            statisticDetails += Environment.NewLine;
-            statisticDetails += $"Region: {this.Region}";
+            statisticDetails += $" Positive increase: {this.PositiveIncrease}";
+            return statisticDetails;
+        }
+
+        /// <summary>
+        /// Gets the formated string.
+        /// </summary>
+        /// <returns>
+        /// The full formatted string for the statistic
+        /// </returns>
+        public String GetsFormatedString() 
+        {
+
+            var statisticDetails = string.Empty;
+
+            statisticDetails += $"Date: {this.Date.ToShortDateString()}";
+            statisticDetails += $" Region: {this.Region}";
             statisticDetails += Environment.NewLine;
             statisticDetails += $"Positive increase: {this.PositiveIncrease}";
             statisticDetails += Environment.NewLine;

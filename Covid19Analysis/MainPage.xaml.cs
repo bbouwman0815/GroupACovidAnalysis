@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -140,6 +138,7 @@ namespace Covid19Analysis
             this.SummaryReport = new SummaryReport(DefaultRegion, this.FileLoader.LoadedCovidStats, DefaultLowerBound,
                 DefaultUpperBound,
                 DefaultHistogramBinSize);
+            this.dataListView.ItemsSource = this.FileLoader.LoadedCovidStats;
 
             ApplicationView.PreferredLaunchViewSize = new Size {Width = ApplicationWidth, Height = ApplicationHeight};
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
@@ -160,7 +159,6 @@ namespace Covid19Analysis
 
             if (!this.FileLoader.LoadedCovidStats.ContainsData())
             {
-                this.summaryTextBox.Text = "Load file was invoked.";
                 this.loadAndReadFile();
             }
         }
@@ -190,7 +188,6 @@ namespace Covid19Analysis
 
             if (selectedFile != null)
             {
-                this.summaryTextBox.Text = "Selected path: " + selectedFile.Path;
                 this.processFile(selectedFile);
             }
         }
@@ -210,7 +207,7 @@ namespace Covid19Analysis
 
             this.FileLoader.LoadFile(fileContent);
             this.handleDuplicateDays();
-            this.summaryTextBox.Text = "Load Complete";
+            this.dataListView.ItemsSource = this.FileLoader.LoadedCovidStats.ToList();
         }
 
         private void handleDuplicateDays()
@@ -333,7 +330,6 @@ namespace Covid19Analysis
 
         private void clearSummary()
         {
-            this.summaryTextBox.Text = string.Empty;
             this.FileLoader.LoadedCovidStats.Clear();
         }
 
@@ -479,5 +475,11 @@ namespace Covid19Analysis
             };
             await stateDialog.ShowAsync();
         }
+
+        private void DataListView_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
