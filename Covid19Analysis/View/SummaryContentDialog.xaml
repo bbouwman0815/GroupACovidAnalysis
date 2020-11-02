@@ -1,0 +1,19 @@
+﻿<ContentDialog
+    x:Class="Covid19Analysis.View.SummaryContentDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+    xmlns:foundation="using:Windows.Foundation"
+    xmlns:system="using:System"
+    mc:Ignorable="d"
+    Title="Display Covid Summary"
+    PrimaryButtonText="Cancel"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
+
+    <Grid >
+        <TextBox x:Name="summaryTextBox" HorizontalAlignment="Left" Margin="12,67,0,0" VerticalAlignment="Top" TextWrapping="Wrap" Text="Summary" Height="276" Width="400" IsReadOnly="True" AutomationProperties.Name="summaryTextBlock" FontFamily="Consolas" Grid.ColumnSpan="2"/>
+
+    </Grid>
+</ContentDialog>

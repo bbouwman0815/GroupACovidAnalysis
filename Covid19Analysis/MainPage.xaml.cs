@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -140,6 +138,7 @@ namespace Covid19Analysis
             this.SummaryReport = new SummaryReport(DefaultRegion, this.FileLoader.LoadedCovidStats, DefaultLowerBound,
                 DefaultUpperBound,
                 DefaultHistogramBinSize);
+            this.dataListView.ItemsSource = this.FileLoader.LoadedCovidStats;
 
             ApplicationView.PreferredLaunchViewSize = new Size {Width = ApplicationWidth, Height = ApplicationHeight};
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
@@ -160,7 +159,6 @@ namespace Covid19Analysis
 
             if (!this.FileLoader.LoadedCovidStats.ContainsData())
             {
-                this.summaryTextBox.Text = "Load file was invoked.";
                 this.loadAndReadFile();
             }
         }
@@ -173,7 +171,8 @@ namespace Covid19Analysis
 
         private FileOpenPicker setFileOpenPicker()
         {
-            var fileOpener = new FileOpenPicker {
+            var fileOpener = new FileOpenPicker
+            {
                 ViewMode = PickerViewMode.Thumbnail,
                 SuggestedStartLocation = PickerLocationId.DocumentsLibrary
             };
@@ -190,7 +189,6 @@ namespace Covid19Analysis
 
             if (selectedFile != null)
             {
-                this.summaryTextBox.Text = "Selected path: " + selectedFile.Path;
                 this.processFile(selectedFile);
             }
         }
@@ -210,7 +208,7 @@ namespace Covid19Analysis
 
             this.FileLoader.LoadFile(fileContent);
             this.handleDuplicateDays();
-            this.summaryTextBox.Text = this.SummaryReport.GenerateDataForRegion();
+            this.dataListView.ItemsSource = this.FileLoader.LoadedCovidStats.ToList();
         }
 
         private void handleDuplicateDays()
@@ -289,7 +287,8 @@ namespace Covid19Analysis
 
         private async void displayLineErrorDialog()
         {
-            var errorDialog = new ContentDialog {
+            var errorDialog = new ContentDialog
+            {
                 Title = "Logged Errors",
                 Content = this.FileLoader.Errors,
                 CloseButtonText = "Close"
@@ -329,12 +328,10 @@ namespace Covid19Analysis
             this.SummaryReport =
                 new SummaryReport(this.Region, this.FileLoader.LoadedCovidStats, this.LowerBound, this.UpperBound,
                     this.HistogramBinSize);
-            this.summaryTextBox.Text = this.SummaryReport.GenerateDataForRegion();
         }
 
         private void clearSummary()
         {
-            this.summaryTextBox.Text = string.Empty;
             this.FileLoader.LoadedCovidStats.Clear();
         }
 
@@ -382,7 +379,8 @@ namespace Covid19Analysis
 
         private async void displayAddError()
         {
-            var errorDialog = new ContentDialog {
+            var errorDialog = new ContentDialog
+            {
                 Title = "Add Error",
                 Content = "Unable to add. Make sure all fields are correct.",
                 CloseButtonText = "Close"
@@ -425,7 +423,8 @@ namespace Covid19Analysis
 
         private async void displayHistogramError()
         {
-            var errorDialog = new ContentDialog {
+            var errorDialog = new ContentDialog
+            {
                 Title = "Set Histogram Bin Error",
                 Content = "Unable to set. Make sure the number is positive",
                 CloseButtonText = "Close"
@@ -450,16 +449,24 @@ namespace Covid19Analysis
 
             if (result == ContentDialogResult.Primary)
             {
-                try
+                if (!this.SummaryReport.RegionData.ContainsKey(getRegion.Region))
+                {
+                    this.displayStateError();
+                    this.Region = DefaultRegion;
+                }
+                else
                 {
                     this.Region = getRegion.Region;
                     this.updateSummary();
                 }
-                catch (KeyNotFoundException theKeyNotFoundxception)
-                {
-                    this.displayStateError();
-                }
             }
+        }
+
+        private async void DisplaySummaryButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var displaySummary = new SummaryContentDialog(this.SummaryReport.GenerateDataForRegion());
+
+            await displaySummary.ShowAsync();
         }
 
         private async void displayStateError()
@@ -471,6 +478,24 @@ namespace Covid19Analysis
                 CloseButtonText = "Close"
             };
             await stateDialog.ShowAsync();
+        }
+
+        private async void DisplayDailyStatDetailsButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = this.dataListView.SelectedItem;
+            if (selectedItem.GetType().Equals(typeof(DailyCovidStat)))
+            {
+                DailyCovidStat selectedStat = selectedItem as DailyCovidStat;
+                var displayStatDetails = new DisplayStatDetailsContentDialog(selectedStat.GetsFullFormattedString());
+
+                await displayStatDetails.ShowAsync();
+            }
+
+        }
+
+        private void DataListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.displayDailyStatDetailsButton.IsEnabled = true;
         }
     }
 }

@@ -66,6 +66,7 @@ namespace Covid19Analysis.View
         public AddDailyStatContentDialog()
         {
             this.InitializeComponent();
+            this.datePicker.MaxDate = DateTimeOffset.Now;
         }
 
         #endregion
@@ -74,7 +75,7 @@ namespace Covid19Analysis.View
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            var date = this.datePicker.SelectedDate;
+            var date = this.datePicker.Date;
 
             if (date != null)
             {
