@@ -6,9 +6,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CovidAnalysisTests
 {
-    /// Input: {}                               OutPut: ArgumentOutOfRangeException
-    /// Input: {125, 77, 55, 111, 144, 222}     OutPut: 122.33 repeating
-    /// Input: {0, 0, 123, 44, 208}             OutPut: 46.87
+    /// Input ({hospitalized} in  statistics list| Expected Output Th average of hospitalized values
+    /// Input: {}                                | OutPut: ArgumentOutOfRangeException
+    /// Input: {125, 77, 55, 111, 144, 222}      | OutPut: 122.33 repeating
+    /// Input: {0, 0, 123, 44, 208}              | OutPut: 46.87
     [TestClass]
     public class CalculateAverageCurrentlyHospitalized
     {

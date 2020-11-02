@@ -6,9 +6,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CovidAnalysisTests
 {
-    /// Input: {}                               OutPut: ArgumentOutOfRangeException
-    /// Input: {55/160, 222/900, 100/500}       OutPut: 0.24
-    /// Input: {44/232}                         OutPut: 0.18
+    /// Input ({Positive tests / total Tests} int Daily covid Stat |Expected Output (Positivity Rate)
+    /// Input: {}                                                  |OutPut: ArgumentOutOfRangeException
+    /// Input: {55/160, 222/900, 100/500}                          |OutPut: 0.24
+    /// Input: {44/232}                                            |OutPut: 0.18
     [TestClass]
     public class CalculateOverallPositivityTests
     {
