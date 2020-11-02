@@ -210,7 +210,7 @@ namespace Covid19Analysis
 
             this.FileLoader.LoadFile(fileContent);
             this.handleDuplicateDays();
-            this.summaryTextBox.Text = this.SummaryReport.GenerateDataForRegion();
+            this.summaryTextBox.Text = "Load Complete";
         }
 
         private void handleDuplicateDays()
@@ -329,7 +329,6 @@ namespace Covid19Analysis
             this.SummaryReport =
                 new SummaryReport(this.Region, this.FileLoader.LoadedCovidStats, this.LowerBound, this.UpperBound,
                     this.HistogramBinSize);
-            this.summaryTextBox.Text = this.SummaryReport.GenerateDataForRegion();
         }
 
         private void clearSummary()
@@ -450,16 +449,24 @@ namespace Covid19Analysis
 
             if (result == ContentDialogResult.Primary)
             {
-                try
+                if (!this.SummaryReport.RegionData.ContainsKey(getRegion.Region))
+                { 
+                    this.displayStateError(); 
+                    this.Region = DefaultRegion;
+                }
+                else
                 {
                     this.Region = getRegion.Region;
                     this.updateSummary();
                 }
-                catch (KeyNotFoundException theKeyNotFoundxception)
-                {
-                    this.displayStateError();
-                }
             }
+        }
+
+        private async void DisplaySummaryButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var displaySummary = new SummaryContentDialog(this.SummaryReport.GenerateDataForRegion());
+
+            await displaySummary.ShowAsync();
         }
 
         private async void displayStateError()

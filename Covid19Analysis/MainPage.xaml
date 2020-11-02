@@ -26,6 +26,7 @@
         <Button x:Name="getHistogramButton" Content="Set Histogram bin" Margin="370,348,0,0" VerticalAlignment="Top" Width="111" Click="getHistogramButton_Click" />
         <Button x:Name="saveDataButton" Content="Save Data" Margin="106,385,0,0" VerticalAlignment="Top" Width="112" Click="saveDataButton_Click"/>
         <Button x:Name="selectStateButton" Content="Set State" Margin="370,385,0,0" VerticalAlignment="Top" Width="111" Click="SelectStateButton_OnClick"/>
+        <Button x:Name="displaySummaryButton" Content="Display Summary" Margin="235,385,0,0" VerticalAlignment="Top" Width="111" Click="DisplaySummaryButton_OnClick"/>
 
     </Grid>
 </Page>
