@@ -35,7 +35,7 @@ namespace Covid19Analysis.CollectionQueries
                 throw new ArgumentOutOfRangeException(nameof(data), "Collection cannot be empty.");
             }
 
-            var timeDifference = CalculateTimeDifferenceSinceFirstPosTest(data);
+            var timeDifference = calculateTimeDifferenceSinceFirstPosTest(data);
             var firstDay = FindMinMax.FindOldestPositiveCase(data);
             var totalTests = data.Where(currentDay => currentDay.Date.Date >= firstDay.Date.Date)
                                  .Sum(currentDay => currentDay.PositiveIncrease);
@@ -68,7 +68,7 @@ namespace Covid19Analysis.CollectionQueries
                 throw new ArgumentOutOfRangeException(nameof(data), "Collection cannot be empty.");
             }
 
-            var timeDifference = CalculateTimeDifferenceSinceFirstTest(data);
+            var timeDifference = calculateTimeDifferenceSinceFirstTest(data);
             var firstDay = FindMinMax.FindOldestTestCase(data);
             var totalTests = data.Where(currentDay => currentDay.Date.Date >= firstDay.Date.Date)
                                  .Sum(currentDay => currentDay.PositiveIncrease);
@@ -78,7 +78,7 @@ namespace Covid19Analysis.CollectionQueries
             return average;
         }
 
-        private static int CalculateTimeDifferenceSinceFirstPosTest(List<DailyCovidStat> data)
+        private static int calculateTimeDifferenceSinceFirstPosTest(List<DailyCovidStat> data)
         {
             if (data == null)
             {
@@ -99,7 +99,7 @@ namespace Covid19Analysis.CollectionQueries
             return timeDifference;
         }
 
-        private static int CalculateTimeDifferenceSinceFirstTest(List<DailyCovidStat> data)
+        private static int calculateTimeDifferenceSinceFirstTest(List<DailyCovidStat> data)
         {
             if (data == null)
             {
@@ -144,9 +144,9 @@ namespace Covid19Analysis.CollectionQueries
 
             var filteredList = data.Where(currentDay => currentDay.HasNegativeCases || currentDay.HasPositiveCases)
                                    .ToList();
-            var numberDays = CalculateTimeDifferenceSinceFirstTest(filteredList);
+            var numberDays = calculateTimeDifferenceSinceFirstTest(filteredList);
             var totalTests = filteredList.Sum(currentDay => currentDay.TotalTests);
-            var average = (double) totalTests / CalculateTimeDifference(filteredList);
+            var average = (double) totalTests / calculateTimeDifference(filteredList);
 
             return average;
         }
@@ -172,14 +172,14 @@ namespace Covid19Analysis.CollectionQueries
                 throw new ArgumentOutOfRangeException(nameof(data), "Collection cannot be empty.");
             }
 
-            var numberDays = CalculateTimeDifferenceSinceFirstTest(data.ToList());
+            var numberDays = calculateTimeDifferenceSinceFirstTest(data.ToList());
             var totalCurrentHosp = data.Sum(currentDay => currentDay.HospitalizedCurrently);
-            var average = (double)totalCurrentHosp / CalculateTimeDifference(data);
+            var average = (double)totalCurrentHosp / calculateTimeDifference(data);
 
             return average;
         }
 
-        private static int CalculateTimeDifference(ICollection<DailyCovidStat> data)
+        private static int calculateTimeDifference(ICollection<DailyCovidStat> data)
         {
             if (data == null)
             {

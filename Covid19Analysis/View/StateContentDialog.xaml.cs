@@ -14,6 +14,9 @@ namespace Covid19Analysis.View
         /// </summary>
         public string Region;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StateContentDialog"/> class.
+        /// </summary>
         public StateContentDialog()
         {
             this.InitializeComponent();

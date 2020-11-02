@@ -13,12 +13,12 @@ namespace Covid19Analysis.Model
     {
         #region Properties
 
-        private ICollection<DailyCovidStat> covidData { get; }
+        private ICollection<DailyCovidStat> CovidData { get; }
 
         /// <summary>
         ///     Gets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"></see>.
         /// </summary>
-        public int Count => this.covidData.Count();
+        public int Count => this.CovidData.Count();
 
         /// <summary>
         ///     Gets a value indicating whether the <see cref="T:System.Collections.Generic.ICollection`1"></see> is read-only.
@@ -34,7 +34,7 @@ namespace Covid19Analysis.Model
         /// </summary>
         public TotalCovidStats()
         {
-            this.covidData = new Collection<DailyCovidStat>();
+            this.CovidData = new Collection<DailyCovidStat>();
         }
 
         #endregion
@@ -58,7 +58,7 @@ namespace Covid19Analysis.Model
                 throw new NullReferenceException("Cannot add null statistic");
             }
 
-            this.covidData.Add(statistic);
+            this.CovidData.Add(statistic);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Covid19Analysis.Model
         /// <exception cref="NullReferenceException">Cannot clear null collection</exception>
         public void Clear()
         {
-            this.covidData.Clear();
+            this.CovidData.Clear();
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Covid19Analysis.Model
                 throw new NullReferenceException("Item cannot be null");
             }
 
-            if (this.covidData.Contains(statistic))
+            if (this.CovidData.Contains(statistic))
             {
                 containsStatistic = true;
             }
@@ -130,7 +130,7 @@ namespace Covid19Analysis.Model
                 throw new ArgumentException("Index cannot be negative");
             }
 
-            this.covidData.CopyTo(array, arrayIndex);
+            this.CovidData.CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Covid19Analysis.Model
                 throw new NullReferenceException("Statistic cannot be null");
             }
 
-            return this.covidData.Remove(statistic);
+            return this.CovidData.Remove(statistic);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Covid19Analysis.Model
         /// </returns>
         public IEnumerator<DailyCovidStat> GetEnumerator()
         {
-            return this.covidData.GetEnumerator();
+            return this.CovidData.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -205,7 +205,7 @@ namespace Covid19Analysis.Model
 
             foreach (var t in regions)
             {
-                var regionalData = this.covidData.Where(currentDay => t.Equals(currentDay.Region)).ToList();
+                var regionalData = this.CovidData.Where(currentDay => t.Equals(currentDay.Region)).ToList();
                 dictionary.TryAdd(t, regionalData);
             }
 
@@ -222,12 +222,12 @@ namespace Covid19Analysis.Model
         /// </returns>
         public Dictionary<string, List<DailyCovidStat>> CreateMonthlyDictionary(List<DailyCovidStat> data)
         {
-            if (this.covidData.Count <= 0)
+            if (this.CovidData.Count <= 0)
             {
                 throw new IndexOutOfRangeException("Collection cannot be empty");
             }
 
-            if (this.covidData == null)
+            if (this.CovidData == null)
             {
                 throw new NullReferenceException("Collection cannot be null");
             }
@@ -259,12 +259,12 @@ namespace Covid19Analysis.Model
         {
             var wasReplaced = false;
 
-            foreach (var currentDay in this.covidData.ToList()
+            foreach (var currentDay in this.CovidData.ToList()
                                            .Where(currentDay =>
                                                currentDay.Date == day.Date && currentDay.Region == day.Region))
             {
-                this.covidData.Remove(currentDay);
-                this.covidData.Add(day);
+                this.CovidData.Remove(currentDay);
+                this.CovidData.Add(day);
                 wasReplaced = true;
             }
 
@@ -279,7 +279,7 @@ namespace Covid19Analysis.Model
         /// </returns>
         public bool ContainsData()
         {
-            return this.covidData.Count > 0;
+            return this.CovidData.Count > 0;
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace Covid19Analysis.Model
         {
             var hasData = false;
             foreach (var _ in this
-                              .covidData.Where(currentDay => currentDay.HasPositiveCases || currentDay.HasNegativeCases)
+                              .CovidData.Where(currentDay => currentDay.HasPositiveCases || currentDay.HasNegativeCases)
                               .Select(currentDay => new { }))
             {
                 hasData = true;

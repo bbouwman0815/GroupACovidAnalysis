@@ -45,7 +45,7 @@ namespace Covid19Analysis.Utility
         /// <value>
         ///     The Data in CSV form.
         /// </value>
-        public string DataInCSVForm { get; set; }
+        public string DataInCsvForm { get; set; }
 
         #endregion
 
@@ -82,7 +82,7 @@ namespace Covid19Analysis.Utility
             {
                 CachedFileManager.DeferUpdates(file);
 
-                await FileIO.WriteTextAsync(file, this.DataInCSVForm);
+                await FileIO.WriteTextAsync(file, this.DataInCsvForm);
 
                 var status =
                     await CachedFileManager.CompleteUpdatesAsync(file);
@@ -97,26 +97,26 @@ namespace Covid19Analysis.Utility
         {
             foreach (var currentDay in this.Data)
             {
-                this.DataInCSVForm += currentDay.Date.ToString("yyyyMMdd");
-                this.DataInCSVForm += Comma;
+                this.DataInCsvForm += currentDay.Date.ToString("yyyyMMdd");
+                this.DataInCsvForm += Comma;
 
-                this.DataInCSVForm += currentDay.Region;
-                this.DataInCSVForm += Comma;
+                this.DataInCsvForm += currentDay.Region;
+                this.DataInCsvForm += Comma;
 
-                this.DataInCSVForm += currentDay.PositiveIncrease;
-                this.DataInCSVForm += Comma;
+                this.DataInCsvForm += currentDay.PositiveIncrease;
+                this.DataInCsvForm += Comma;
 
-                this.DataInCSVForm += currentDay.NegativeIncrease;
-                this.DataInCSVForm += Comma;
+                this.DataInCsvForm += currentDay.NegativeIncrease;
+                this.DataInCsvForm += Comma;
 
-                this.DataInCSVForm += currentDay.DeathIncrease;
-                this.DataInCSVForm += Comma;
+                this.DataInCsvForm += currentDay.DeathIncrease;
+                this.DataInCsvForm += Comma;
 
-                this.DataInCSVForm += currentDay.HospitalizedIncrease;
-                this.DataInCSVForm += Environment.NewLine;
+                this.DataInCsvForm += currentDay.HospitalizedIncrease;
+                this.DataInCsvForm += Environment.NewLine;
             }
 
-            return this.DataInCSVForm;
+            return this.DataInCsvForm;
         }
 
         #endregion
