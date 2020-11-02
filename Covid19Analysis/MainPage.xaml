@@ -28,7 +28,8 @@
         <Button x:Name="saveDataButton" Content="Save Data" Margin="106,385,0,0" VerticalAlignment="Top" Width="112" Click="saveDataButton_Click"/>
         <Button x:Name="selectStateButton" Content="Set State" Margin="370,385,0,0" VerticalAlignment="Top" Width="111" Click="SelectStateButton_OnClick"/>
         <Button x:Name="displaySummaryButton" Content="Display Summary" Margin="220,385,0,0" VerticalAlignment="Top" Width="148" Click="DisplaySummaryButton_OnClick"/>
-        <ListView x:Name="dataListView" Height="226" Width="470" ItemClick="DataListView_OnItemClick"  />
+        <Button x:Name="displayDailyStatDetailsButton" Content="Display Stat Details" Margin="222,295,0,0" Width="148" Click="DisplayDailyStatDetailsButton_OnClick" IsEnabled="false"></Button>
+        <ListView x:Name="dataListView" Height="226" Width="470" SelectionChanged="DataListView_OnSelectionChanged" />
         
 
     </Grid>

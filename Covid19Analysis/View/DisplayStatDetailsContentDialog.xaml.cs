@@ -7,12 +7,12 @@ using Covid19Analysis.Model;
 namespace Covid19Analysis.View
 {
     /// <summary>
-    ///     Brings up a content dialog Displaying the summary of the covid statistic in thr collection
+    ///     Brings up a content dialog displaying the details of the selected stats
     /// </summary>
     /// <seealso cref="Windows.UI.Xaml.Controls.ContentDialog" />
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
-    public sealed partial class SummaryContentDialog : ContentDialog
+    public sealed partial class DisplayStatDetailsContentDialog : ContentDialog
     {
         #region Data members        
         
@@ -23,10 +23,10 @@ namespace Covid19Analysis.View
         /// <summary>
         ///     Initializes a new instance of the <see cref="AddDailyStatContentDialog" /> class.
         /// </summary>
-        public SummaryContentDialog(String displayText)
+        public DisplayStatDetailsContentDialog(String displayText)
         {
             this.InitializeComponent();
-            this.summaryTextBox.Text = displayText;
+            this.detailsTextBox.Text = displayText;
         }
 
         #endregion

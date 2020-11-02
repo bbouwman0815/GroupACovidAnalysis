@@ -136,6 +136,9 @@
     <Compile Include="Utility\FileSaver.cs" />
     <Compile Include="Utility\CollectionFilters.cs" />
     <Compile Include="Utility\SummaryFormatTools.cs" />
+    <Compile Include="View\DisplayStatDetailsContentDialog.xaml.cs">
+      <DependentUpon>DisplayStatDetailsContentDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SummaryContentDialog.xaml.cs">
       <DependentUpon>SummaryContentDialog.xaml</DependentUpon>
     </Compile>
@@ -183,6 +186,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\DisplayStatDetailsContentDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

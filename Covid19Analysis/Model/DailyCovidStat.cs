@@ -185,7 +185,7 @@ namespace Covid19Analysis.Model
         /// <returns>
         /// The full formatted string for the statistic
         /// </returns>
-        public String GetsFormatedString() 
+        public String GetsFullFormattedString() 
         {
 
             var statisticDetails = string.Empty;
