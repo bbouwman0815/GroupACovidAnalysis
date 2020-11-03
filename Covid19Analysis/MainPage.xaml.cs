@@ -515,18 +515,5 @@ namespace Covid19Analysis
             this.FileLoader.LoadedCovidStats.Remove(selectedStat);
             this.dataListView.ItemsSource = this.FileLoader.LoadedCovidStats.ToList();
         }
-
-        private async void EditSelectedDayButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            var selectedItem = this.dataListView.SelectedItem;
-            if (selectedItem.GetType().Equals(typeof(DailyCovidStat)))
-            {
-                DailyCovidStat selectedStat = (DailyCovidStat) selectedItem;
-                var editContentDialog = new EditDailyStatContentDialog(selectedStat);
-                
-                await editContentDialog.ShowAsync();
-                
-            }
-        }
     }
 }
