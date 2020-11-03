@@ -20,7 +20,7 @@ namespace Covid19Analysis
     /// <summary>
     ///     An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage
     {
         #region Data members
 
@@ -97,14 +97,6 @@ namespace Covid19Analysis
         /// The region.
         /// </value>
         public string Region { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the errors.
-        /// </summary>
-        /// <value>
-        ///     The errors.
-        /// </value>
-        public string Errors { get; set; }
 
         /// <summary>
         ///     Gets or sets the added daily covid stat.
@@ -246,7 +238,7 @@ namespace Covid19Analysis
                 {
                     if (!hasReplaceAllSelected)
                     {
-                        var result = await existingCovidDay.ShowAsync();
+                        await existingCovidDay.ShowAsync();
                     }
 
                     if (existingCovidDay.Result == Result.Replace)
@@ -395,7 +387,7 @@ namespace Covid19Analysis
         {
             var duplicateStatContentDialog = new DuplicateStatContentDialog(this.AddedStat);
 
-            var duplicateDialogResult = await duplicateStatContentDialog.ShowAsync();
+            await duplicateStatContentDialog.ShowAsync();
 
             if (duplicateStatContentDialog.Result == Result.Replace)
             {

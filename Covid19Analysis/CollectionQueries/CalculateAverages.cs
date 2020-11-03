@@ -144,7 +144,6 @@ namespace Covid19Analysis.CollectionQueries
 
             var filteredList = data.Where(currentDay => currentDay.HasNegativeCases || currentDay.HasPositiveCases)
                                    .ToList();
-            var numberDays = calculateTimeDifferenceSinceFirstTest(filteredList);
             var totalTests = filteredList.Sum(currentDay => currentDay.TotalTests);
             var average = (double) totalTests / calculateTimeDifference(filteredList);
 
@@ -172,7 +171,6 @@ namespace Covid19Analysis.CollectionQueries
                 throw new ArgumentOutOfRangeException(nameof(data), "Collection cannot be empty.");
             }
 
-            var numberDays = calculateTimeDifferenceSinceFirstTest(data.ToList());
             var totalCurrentHosp = data.Sum(currentDay => currentDay.HospitalizedCurrently);
             var average = (double)totalCurrentHosp / calculateTimeDifference(data);
 
