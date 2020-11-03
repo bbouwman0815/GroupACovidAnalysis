@@ -8,7 +8,7 @@ namespace Covid19Analysis.View
     ///     Displays a dialog if a file already exists
     /// </summary>
     /// <seealso cref="Windows.UI.Xaml.Controls.ContentDialog" />
-    public sealed partial class ExistingFileContentDialog : ContentDialog
+    public sealed partial class ExistingFileContentDialog
     {
         #region Constructors
 

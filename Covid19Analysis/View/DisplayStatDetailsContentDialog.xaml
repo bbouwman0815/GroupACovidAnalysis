@@ -10,7 +10,7 @@
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
 
     <Grid >
-        <TextBox x:Name="detailsTextBox" HorizontalAlignment="Left" Margin="12,67,0,0" VerticalAlignment="Top" TextWrapping="Wrap" Text="Details" Height="276" Width="400" IsReadOnly="True" AutomationProperties.Name="summaryTextBlock" FontFamily="Consolas" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="detailsTextBox" HorizontalAlignment="Left" Margin="12,67,0,0" VerticalAlignment="Top" TextWrapping="Wrap" Text="Details" Height="276" Width="485" IsReadOnly="True" AutomationProperties.Name="summaryTextBlock" FontFamily="Consolas"/>
 
     </Grid>
 </ContentDialog>
