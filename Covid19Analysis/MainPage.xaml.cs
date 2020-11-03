@@ -195,7 +195,7 @@ namespace Covid19Analysis
 
         private async void processFile(StorageFile selectedFile)
         {
-            var fileContent = string.Empty;
+            string fileContent;
             var fileToRead = await selectedFile.OpenAsync(FileAccessMode.Read);
             _ = new FileInfo(selectedFile.Path);
 

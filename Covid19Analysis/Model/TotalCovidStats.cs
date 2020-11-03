@@ -18,7 +18,7 @@ namespace Covid19Analysis.Model
         /// <summary>
         ///     Gets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"></see>.
         /// </summary>
-        public int Count => this.CovidData.Count();
+        public int Count => this.CovidData.Count;
 
         /// <summary>
         ///     Gets a value indicating whether the <see cref="T:System.Collections.Generic.ICollection`1"></see> is read-only.

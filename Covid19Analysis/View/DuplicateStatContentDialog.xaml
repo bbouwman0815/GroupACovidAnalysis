@@ -22,7 +22,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <TextBlock Grid.ColumnSpan="3" Text="How would you like to handle the duplicate?" Margin="5,15,5,5" />
-        <Button Grid.Row="1" Content="Discard" x:Name="btn1" Click="discard_Click" Margin="5,0" Width="100" />
+        <Button Grid.Row="1" Grid.Column="0" Content="Discard" x:Name="btn1" Click="discard_Click" Margin="5,0" Width="100" />
         <Button Grid.Row="1" Grid.Column="1" Content="Discard All" x:Name="btn4" Margin="5,0" Width="100" Click="btn4_Click" />
         <Button Grid.Row="1" Grid.Column="2" Content="Replace" x:Name="btn2" Click="replace_Click" Margin="5,0" Width="100" />
         <Button Grid.Row="1" Grid.Column="3" Content="Replace All" x:Name="btn3" Click="replaceAll_Click" Margin="5,0" Width="100" />
