@@ -498,6 +498,8 @@ namespace Covid19Analysis
         private void DataListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.displayDailyStatDetailsButton.IsEnabled = true;
+            this.editSelectedDayButton.IsEnabled = true;
+            this.deleteSelectedDayButton.IsEnabled = true;
         }
 
         private void deleteSelectedDayButton_Click(object sender, RoutedEventArgs e)
