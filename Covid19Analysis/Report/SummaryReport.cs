@@ -33,7 +33,7 @@ namespace Covid19Analysis.Report
         /// <summary>
         /// The month separator
         /// </summary>
-        private const string Separator = "---------------------------------------------------------------------------";
+        private const string Separator = "-------------------------------------------------";
 
         #endregion
 

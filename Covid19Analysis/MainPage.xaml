@@ -24,10 +24,10 @@
         <Button x:Name="displayDailyStatDetailsButton" Content="Display Details" Margin="85,356,0,0" Width="114" Click="DisplayDailyStatDetailsButton_OnClick" IsEnabled="false" VerticalAlignment="Top" RenderTransformOrigin="0.51,0.125"></Button>
         <Button x:Name="editSelectedDayButton" Content="Edit" Margin="204,356,0,0" VerticalAlignment="Top" Width="56"/>
         <Button x:Name="deleteSelectedDayButton" Content="Delete" Margin="265,356,0,0" VerticalAlignment="Top" Click="deleteSelectedDayButton_Click"/>
-        <Button x:Name="getHistogramButton" Content="Set Histogram bin" Margin="470,77,0,0" VerticalAlignment="Top" Width="137" Click="getHistogramButton_Click" />
+        <Button x:Name="selectStateButton" Content="Set State" Margin="470,79,0,0" VerticalAlignment="Top" Width="137" Click="SelectStateButton_OnClick" Height="30"/>
         <Button x:Name="getLowerBoundButton" Content="Set Lower Bound" Margin="470,114,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.046,0.647" Click="getLowerBoundButton_Click" Width="137"/>
         <Button x:Name="getUpperBoundButton" Content="Set Upper Bound" Margin="470,151,0,0" VerticalAlignment="Top" Click="getUpperBoundButton_Click" Width="137"/>
-        <Button x:Name="selectStateButton" Content="Set State" Margin="470,188,0,0" VerticalAlignment="Top" Width="137" Click="SelectStateButton_OnClick" Height="30"/>
+        <Button x:Name="getHistogramButton" Content="Set Histogram bin" Margin="470,188,0,0" VerticalAlignment="Top" Width="137" Click="getHistogramButton_Click" />
         <Button x:Name="displaySummaryButton" Content="Display Summary" Margin="470,255,0,0" VerticalAlignment="Top" Width="137" Click="DisplaySummaryButton_OnClick"/>
         <Button x:Name="displayErrorsButton" Content="Display Errors" Margin="470,292,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.338,-0.869" Click="displayErrorsButton_Click" Width="137"/>
         <Button x:Name="clearDataButton" Content="Clear All Data" Margin="470,356,15,0" VerticalAlignment="Top" RenderTransformOrigin="-1.137,0.504" Click="clearDataButton_Click" HorizontalAlignment="Stretch"/>

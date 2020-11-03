@@ -270,6 +270,7 @@ namespace Covid19Analysis
                 }
                 catch
                 {
+                    throw new ArgumentException();
                 }
 
                 this.updateSummary();
@@ -485,13 +486,20 @@ namespace Covid19Analysis
         private async void DisplayDailyStatDetailsButton_OnClick(object sender, RoutedEventArgs e)
         {
             var selectedItem = this.dataListView.SelectedItem;
-            if (selectedItem.GetType().Equals(typeof(DailyCovidStat)))
+            if (selectedItem == null || selectedItem.GetType() != typeof(DailyCovidStat))
             {
-                DailyCovidStat selectedStat = selectedItem as DailyCovidStat;
-                var displayStatDetails = new DisplayStatDetailsContentDialog(selectedStat.GetsFullFormattedString());
-
-                await displayStatDetails.ShowAsync();
+                return;
             }
+
+            DailyCovidStat selectedStat = selectedItem as DailyCovidStat;
+            if (selectedStat == null)
+            {
+                return;
+            }
+
+            var displayStatDetails = new DisplayStatDetailsContentDialog(selectedStat.GetsFullFormattedString());
+
+            await displayStatDetails.ShowAsync();
 
         }
 
@@ -504,12 +512,14 @@ namespace Covid19Analysis
         {
             var selectedItem = this.dataListView.SelectedItem;
 
-            if (selectedItem.GetType().Equals(typeof(DailyCovidStat)))
+            if (selectedItem == null || selectedItem.GetType() != typeof(DailyCovidStat))
             {
-                DailyCovidStat selectedStat = selectedItem as DailyCovidStat;
-                this.FileLoader.LoadedCovidStats.Remove(selectedStat);
-                this.dataListView.ItemsSource = this.FileLoader.LoadedCovidStats.ToList();
+                return;
             }
+
+            DailyCovidStat selectedStat = selectedItem as DailyCovidStat;
+            this.FileLoader.LoadedCovidStats.Remove(selectedStat);
+            this.dataListView.ItemsSource = this.FileLoader.LoadedCovidStats.ToList();
         }
     }
 }

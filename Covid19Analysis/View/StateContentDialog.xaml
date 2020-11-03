@@ -13,6 +13,6 @@
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
     <Grid>
-        <ComboBox x:Name="StateComboBox" Width="120" />
+        <ComboBox x:Name="stateComboBox" Width="120" />
     </Grid>
 </ContentDialog>
