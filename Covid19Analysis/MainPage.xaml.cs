@@ -334,6 +334,7 @@ namespace Covid19Analysis
         private void clearSummary()
         {
             this.FileLoader.LoadedCovidStats.Clear();
+            this.dataListView.ItemsSource = this.FileLoader.LoadedCovidStats.ToList();
         }
 
         private void displayErrorsButton_Click(object sender, RoutedEventArgs e)
@@ -497,6 +498,18 @@ namespace Covid19Analysis
         private void DataListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.displayDailyStatDetailsButton.IsEnabled = true;
+        }
+
+        private void deleteSelectedDayButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = this.dataListView.SelectedItem;
+
+            if (selectedItem.GetType().Equals(typeof(DailyCovidStat)))
+            {
+                DailyCovidStat selectedStat = selectedItem as DailyCovidStat;
+                this.FileLoader.LoadedCovidStats.Remove(selectedStat);
+                this.dataListView.ItemsSource = this.FileLoader.LoadedCovidStats.ToList();
+            }
         }
     }
 }
