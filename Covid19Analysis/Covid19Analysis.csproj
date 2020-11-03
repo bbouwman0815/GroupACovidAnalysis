@@ -121,6 +121,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Comparers\GeneralComparer.cs" />
+    <Compile Include="Extensions\ListExtension.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -235,7 +236,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Extensions\" />
+    <Folder Include="ViewModel\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
