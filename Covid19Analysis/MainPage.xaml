@@ -13,7 +13,7 @@
                 <Grid/>
             </CommandBar.Content>
             <AppBarButton Icon="openFile" Label="Load File" Click="loadFile_Click"/>
-
+            <AppBarButton Icon="save" Label="Save File" Click="saveData_Click"></AppBarButton>
 
         </CommandBar>
 
@@ -30,7 +30,6 @@
         <Button x:Name="displaySummaryButton" Content="Display Summary" Margin="470,255,0,0" VerticalAlignment="Top" Width="137" Click="DisplaySummaryButton_OnClick"/>
         <Button x:Name="displayErrorsButton" Content="Display Errors" Margin="470,292,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.338,-0.869" Click="displayErrorsButton_Click" Width="137"/>
         <Button x:Name="clearDataButton" Content="Clear All Data" Margin="470,356,15,0" VerticalAlignment="Top" RenderTransformOrigin="-1.137,0.504" Click="clearDataButton_Click" HorizontalAlignment="Stretch"/>
-        <Button x:Name="saveDataButton" Content="Save Data" Margin="470,393,0,0" VerticalAlignment="Top" Width="137" Click="saveDataButton_Click" RenderTransformOrigin="1.839,0.156"/>
         <TextBlock x:Name="listViewHeaderTextBlock" HorizontalAlignment="Left" Margin="29,77,0,0" Text="Select a date to display, edit, or delete" TextWrapping="Wrap" VerticalAlignment="Top" Width="416"/>
     </Grid>
 </Page>

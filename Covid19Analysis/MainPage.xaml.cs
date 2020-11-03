@@ -427,7 +427,7 @@ namespace Covid19Analysis
             await errorDialog.ShowAsync();
         }
 
-        private void saveDataButton_Click(object sender, RoutedEventArgs e)
+        private void saveData_Click(object sender, RoutedEventArgs e)
         {
             var collectionToSave = CollectionFilters.FilterByRegion(this.FileLoader.LoadedCovidStats.ToList(), Region);
             var fileSaver = new FileSaver(collectionToSave);
