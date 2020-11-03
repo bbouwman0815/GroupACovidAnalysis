@@ -5,9 +5,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CovidAnalysisTests
 {
-    /// Input: EmptyCollection                    Output: ArgumentOutOfRangeException
-    /// Input: boundary test (1 in bounds)        Output: PositiveTestsGreaterThanX = 1
-    /// Input: test of size 1                     Output: PositiveTestsGreaterThanX = 1
+    /// Input ({positive tests} in a collection of covid stats |Expected Value (Number of stats with positive tests below that threshold
+    /// Input: EmptyCollection                                 |Output: ArgumentOutOfRangeException
+    /// Input: {499,500,501}                                   |Output:  1
+    /// Input: {501}                                           |Output: 1
     [TestClass]
     public class PositiveTestsGreaterThanXTests
     {

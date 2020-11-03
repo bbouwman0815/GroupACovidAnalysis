@@ -6,9 +6,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CovidAnalysisTests
 {
-    /// Input: EmptyCollection        OutPut: ArgumentOutOfRangeException
-    /// Input: two positive highs     OutPut: Count == 2
-    /// Input: one positive high      Output: Count == 0
+    /// Input (A collection with multiple max positive test) |Expected Output (Number of days in the collection with the same max positive tests)
+    /// Input: EmptyCollection                               |OutPut: ArgumentOutOfRangeException
+    /// Input: two positive highs                            |OutPut: Count == 2
+    /// Input: one positive high                             |Output: Count == 0
     [TestClass]
     public class FindDaysSamePositiveHighTests
     {

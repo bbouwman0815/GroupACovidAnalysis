@@ -5,10 +5,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CovidAnalysisTests
 {
     /// <summary>
-    ///     Test Cases
-    ///     Input: Empty        OutPut: Count == 0
-    ///     Input: One Day      OutPut: Count == 0
-    ///     Input: Three Days   OutPut: Count == 0
+    ///     Input (Collection with a set number of items) |Expected Value (the resulting number of items in the collection)
+    ///     Input: 1                                      |OutPut: Count == 0
+    ///     Input: 2                                      |OutPut: Count == 0
+    ///     Input: 3                                      |OutPut: Count == 0
     /// </summary>
     [TestClass]
     public class ClearTests
