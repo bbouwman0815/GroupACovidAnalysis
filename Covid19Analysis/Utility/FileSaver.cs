@@ -93,7 +93,7 @@ namespace Covid19Analysis.Utility
             }
         }
 
-        private string formatCollectionForSave()
+        private void formatCollectionForSave()
         {
             foreach (var currentDay in this.Data)
             {
@@ -115,8 +115,6 @@ namespace Covid19Analysis.Utility
                 this.DataInCsvForm += currentDay.HospitalizedIncrease;
                 this.DataInCsvForm += Environment.NewLine;
             }
-
-            return this.DataInCsvForm;
         }
 
         #endregion

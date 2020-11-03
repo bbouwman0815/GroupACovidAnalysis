@@ -7,7 +7,7 @@ namespace Covid19Analysis.View
     /// <summary>
     ///  Brings up a content dialog allowing the user to manually select a stat
     /// </summary>
-    public sealed partial class StateContentDialog : ContentDialog
+    public sealed partial class StateContentDialog
     {
         /// <summary>
         /// The region

@@ -10,7 +10,7 @@ namespace Covid19Analysis.View
     /// <seealso cref="Windows.UI.Xaml.Controls.ContentDialog" />
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
-    public sealed partial class LowerBoundContentDialog : ContentDialog
+    public sealed partial class LowerBoundContentDialog
     {
         #region Data members
 
