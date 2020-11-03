@@ -103,15 +103,6 @@ namespace Covid19Analysis.Model
         #region Constructors
 
         /// <summary>
-        ///     Prevents a default instance of the <see cref="DailyCovidStat" /> class from being created.
-        /// </summary>
-        public DailyCovidStat()
-        {
-            this.Date = new DateTime();
-            this.Region = string.Empty;
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="DailyCovidStat" /> class.
         /// </summary>
         /// <param name="date">The Date.</param>

@@ -7,71 +7,78 @@ namespace Covid19Analysis.View
     /// <summary>
     ///  Brings up a content dialog allowing the user to manually select a stat
     /// </summary>
-    public sealed partial class StateContentDialog : ContentDialog
+    public sealed partial class StateContentDialog
     {
         /// <summary>
         /// The region
         /// </summary>
         public string Region;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StateContentDialog"/> class.
+        /// </summary>
         public StateContentDialog()
         {
             this.InitializeComponent();
-            StateComboBox.Items.Add("AL");
-            StateComboBox.Items.Add("AK");
-            StateComboBox.Items.Add("AZ"); 
-            StateComboBox.Items.Add("AR"); 
-            StateComboBox.Items.Add("CA"); 
-            StateComboBox.Items.Add("CO"); 
-            StateComboBox.Items.Add("CT"); 
-            StateComboBox.Items.Add("DE"); 
-            StateComboBox.Items.Add("DC"); 
-            StateComboBox.Items.Add("FL"); 
-            StateComboBox.Items.Add("GA"); 
-            StateComboBox.Items.Add("HI"); 
-            StateComboBox.Items.Add("ID"); 
-            StateComboBox.Items.Add("IL"); 
-            StateComboBox.Items.Add("IN"); 
-            StateComboBox.Items.Add("IA"); 
-            StateComboBox.Items.Add("KS"); 
-            StateComboBox.Items.Add("KY"); 
-            StateComboBox.Items.Add("LA"); 
-            StateComboBox.Items.Add("ME"); 
-            StateComboBox.Items.Add("MD"); 
-            StateComboBox.Items.Add("MA"); 
-            StateComboBox.Items.Add("MI"); 
-            StateComboBox.Items.Add("MN"); 
-            StateComboBox.Items.Add("MS"); 
-            StateComboBox.Items.Add("MO"); 
-            StateComboBox.Items.Add("MT"); 
-            StateComboBox.Items.Add("NE");
-            StateComboBox.Items.Add("NV"); 
-            StateComboBox.Items.Add("NH");
-            StateComboBox.Items.Add("NJ"); 
-            StateComboBox.Items.Add("NM"); 
-            StateComboBox.Items.Add("NY"); 
-            StateComboBox.Items.Add("NC"); 
-            StateComboBox.Items.Add("ND"); 
-            StateComboBox.Items.Add("OH"); 
-            StateComboBox.Items.Add("OK"); 
-            StateComboBox.Items.Add("PA"); 
-            StateComboBox.Items.Add("RI"); 
-            StateComboBox.Items.Add("SC"); 
-            StateComboBox.Items.Add("SC"); 
-            StateComboBox.Items.Add("TN"); 
-            StateComboBox.Items.Add("TX");
-            StateComboBox.Items.Add("UT"); 
-            StateComboBox.Items.Add("VT"); 
-            StateComboBox.Items.Add("VA"); 
-            StateComboBox.Items.Add("WA"); 
-            StateComboBox.Items.Add("WV"); 
-            StateComboBox.Items.Add("WI");
-            StateComboBox.Items.Add("PR");
+            var itemCollection = this.stateComboBox.Items;
+            if (itemCollection != null)
+            {
+                itemCollection.Add("AL");
+                itemCollection.Add("AK");
+                itemCollection.Add("AZ");
+                itemCollection.Add("AR");
+                itemCollection.Add("CA");
+                itemCollection.Add("CO");
+                itemCollection.Add("CT");
+                itemCollection.Add("DE");
+                itemCollection.Add("DC");
+                itemCollection.Add("FL");
+                itemCollection.Add("GA");
+                itemCollection.Add("HI");
+                itemCollection.Add("ID");
+                itemCollection.Add("IL");
+                itemCollection.Add("IN");
+                itemCollection.Add("IA");
+                itemCollection.Add("KS");
+                itemCollection.Add("KY");
+                itemCollection.Add("LA");
+                itemCollection.Add("ME");
+                itemCollection.Add("MD");
+                itemCollection.Add("MA");
+                itemCollection.Add("MI");
+                itemCollection.Add("MN");
+                itemCollection.Add("MS");
+                itemCollection.Add("MO");
+                itemCollection.Add("MT");
+                itemCollection.Add("NE");
+                itemCollection.Add("NV");
+                itemCollection.Add("NH");
+                itemCollection.Add("NJ");
+                itemCollection.Add("NM");
+                itemCollection.Add("NY");
+                itemCollection.Add("NC");
+                itemCollection.Add("ND");
+                itemCollection.Add("OH");
+                itemCollection.Add("OK");
+                itemCollection.Add("PA");
+                itemCollection.Add("RI");
+                itemCollection.Add("SC");
+                itemCollection.Add("SC");
+                itemCollection.Add("TN");
+                itemCollection.Add("TX");
+                itemCollection.Add("UT");
+                itemCollection.Add("VT");
+                itemCollection.Add("VA");
+                itemCollection.Add("WA");
+                itemCollection.Add("WV");
+                itemCollection.Add("WI");
+                itemCollection.Add("PR");
+            }
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            if (StateComboBox.SelectedItem != null) this.Region = StateComboBox.SelectedItem.ToString();
+            if (this.stateComboBox.SelectedItem != null) this.Region = this.stateComboBox.SelectedItem.ToString();
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

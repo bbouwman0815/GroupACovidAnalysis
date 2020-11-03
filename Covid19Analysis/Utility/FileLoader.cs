@@ -145,29 +145,50 @@ namespace Covid19Analysis.Utility
         /// </returns>
         public static DailyCovidStat CreateDayData(IReadOnlyList<string> stats)
         {
-            var data = stats.ToList();
-            if (stats[2].Equals(string.Empty))
-            {
-                data[2] = Zero;
-            }
+            var firstClean = handleFieldsWithEmptyStrings(stats).ToList();
+            var secondClean = handleFieldsWithNegativeValues(firstClean).ToList();
 
-            if (stats[3].Equals(string.Empty))
-            {
-                data[3] = Zero;
-            }
-
-            var dateTime = SummaryFormatTools.CreateDateTime(stats[0]);
-            var state = stats[1];
-            var posIncrease = int.Parse(data[2]);
-            var negIncrease = int.Parse(data[3]);
-            var hospitalizedCurrently = int.Parse(stats[4]);
-            var hospitalizedIncrease = int.Parse(stats[5]);
-            var deathIncrease = int.Parse(stats[6]);
+            var dateTime = SummaryFormatTools.CreateDateTime(secondClean[0]);
+            var state = secondClean[1];
+            var posIncrease = int.Parse(secondClean[2]);
+            var negIncrease = int.Parse(secondClean[3]);
+            var hospitalizedCurrently = int.Parse(secondClean[4]);
+            var hospitalizedIncrease = int.Parse(secondClean[5]);
+            var deathIncrease = int.Parse(secondClean[6]);
 
             var dayData = new DailyCovidStat(dateTime, state, posIncrease, negIncrease, hospitalizedCurrently, hospitalizedIncrease,
                 deathIncrease);
 
             return dayData;
+        }
+
+        private static IEnumerable<string> handleFieldsWithEmptyStrings(IReadOnlyList<string> stats)
+        {
+            var data = stats.ToList();
+
+            for (var i = 2; i < stats.Count; i++)
+            {
+                if (stats[i].Equals(string.Empty))
+                {
+                    data[i] = Zero;
+                }
+            }
+            return data;
+        }
+
+        private static IEnumerable<string> handleFieldsWithNegativeValues(IReadOnlyList<string> stats)
+        {
+            var data = stats.ToList();
+
+            for (var i = 2; i < stats.Count; i++)
+            {
+                var parsedValue = int.Parse(data[i]);
+                if (parsedValue < 0)
+                {
+                    data[i] = Zero;
+                }
+            }
+            return data;
         }
 
         #endregion

@@ -99,21 +99,6 @@ namespace Covid19Analysis.Utility
             return dateTime;
         }
 
-        /// <summary>
-        ///     Parses the Date.
-        /// </summary>
-        /// <param name="date">The Date.</param>
-        /// <returns>
-        ///     Data parsed into a Date
-        /// </returns>
-        public static string ParseDate(string date)
-        {
-            var result = DateTime.ParseExact(date, "yyyyMMdd",
-                CultureInfo.InvariantCulture).ToString("yyyy/MM/dd");
-
-            return result;
-        }
-
         #endregion
     }
 }

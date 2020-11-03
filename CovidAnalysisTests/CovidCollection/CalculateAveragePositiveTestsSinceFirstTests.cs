@@ -6,11 +6,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CovidAnalysisTests
 {
-    /// Input: EmptyCollection              OutPut: ArgumentOutOfRangeException
-    /// Input: No Positive Tests at start   OutPut: Correct Average for 6 days
-    /// Input: No Positive Tests in middle  Output: Correct Average for 5 days
-    /// Input: No Positive Tests at end     Output: Correct Average for 5 days
-    /// Input: Gap of days between Data     Output: Correct Average for 5 days
+    /// Input (A collection of covid stats) |Expected value : The correct average for the given set of days
+    /// Input: EmptyCollection              |OutPut: ArgumentOutOfRangeException
+    /// Input: No Positive Tests at start   |OutPut: 250
+    /// Input: No Positive Tests in middle  |Output: 200
+    /// Input: No Positive Tests at end     |Output: 180
+    /// Input: Gap of days between Data     |Output: 200
     [TestClass]
     public class FindAveragePositiveTestsSinceFirstTests
     {

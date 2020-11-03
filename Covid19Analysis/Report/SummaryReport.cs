@@ -26,14 +26,9 @@ namespace Covid19Analysis.Report
         public const int DefaultLowerBound = 1000;
 
         /// <summary>
-        ///     The default histogram segments
-        /// </summary>
-        public const int DefaultHistogramSegment = 500;
-
-        /// <summary>
         /// The month separator
         /// </summary>
-        private const string Separator = "---------------------------------------------------------------------------";
+        private const string Separator = "-------------------------------------------------";
 
         #endregion
 
@@ -106,23 +101,6 @@ namespace Covid19Analysis.Report
         #endregion
 
         #region Constructors
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="SummaryReport" /> class.
-        /// </summary>
-        /// <param name="region">The Region.</param>
-        /// <param name="data">The Data.</param>
-        public SummaryReport(string region, TotalCovidStats data)
-        {
-            this.Region = region;
-            this.CovidData = data;
-            this.RegionData = new Dictionary<string, List<DailyCovidStat>>();
-            this.MonthlyData = new Dictionary<string, List<DailyCovidStat>>();
-            this.NumberFormatter = new NumberFormatInfo();
-            this.LowerBound = DefaultLowerBound;
-            this.UpperBound = DefaultUpperBound;
-            this.HistogramBinSize = DefaultHistogramSegment;
-        }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="SummaryReport" /> class.

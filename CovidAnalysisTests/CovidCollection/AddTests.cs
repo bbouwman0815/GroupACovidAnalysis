@@ -6,9 +6,10 @@ namespace CovidAnalysisTests
 {
     /// <summary>
     ///     Test Cases
-    ///     Input: Null         OutPut: NullReferenceException
-    ///     Input: One Day      OutPut: Count == 1
-    ///     Input: Three Days   OutPut: Count == 3
+    ///     Input (Number of Daily stat objects)  |Expected Output (Collection size)
+    ///     Input: Null                           |OutPut: NullReferenceException
+    ///     Input: 1                              |OutPut: 1
+    ///     Input: 3                              |OutPut: 3
     /// </summary>
     [TestClass]
     public class AddTests

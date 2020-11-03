@@ -12,7 +12,7 @@ namespace Covid19Analysis.Report
     /// </summary>
     public class MonthlyReport
     {
-        private const string Separator = "---------------------------------------------------------------------------";
+        private const string Separator = "-------------------------------------------------";
         #region Methods
 
         /// <summary>

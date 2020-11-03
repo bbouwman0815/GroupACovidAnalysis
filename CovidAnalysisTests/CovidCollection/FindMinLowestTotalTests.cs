@@ -6,10 +6,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CovidAnalysisTests
 {
-    /// Input: {}                               OutPut: ArgumentOutOfRangeException
-    /// Input: {0, 222, 200, 300}               OutPut: 0
-    /// Input: {555, 555, 200, 0}               OutPut: 0
-    /// Input: {33, 2, 0, 300, 400}             OutPut: 0
+    /// Input ({total tests} of the item in the collection of covid stat) |Expected value (Lowest amount of total test in the collection
+    /// Input: {}                                                         |OutPut: ArgumentOutOfRangeException
+    /// Input: {0, 222, 200, 300}                                         |OutPut: 0
+    /// Input: {555, 555, 200, 0}                                         |OutPut: 0
+    /// Input: {33, 2, 0, 300, 400}                                       |OutPut: 0
     [TestClass]
     public class FindMinLowestTotalTests
     {

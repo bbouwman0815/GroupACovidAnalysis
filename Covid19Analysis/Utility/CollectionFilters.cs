@@ -24,19 +24,6 @@ namespace Covid19Analysis.Utility
             return data.Where(currentDay => currentDay.Region.Equals(region)).ToList();
         }
 
-        /// <summary>
-        ///     Filters the CovidData by month.
-        /// </summary>
-        /// <param name="data">The CovidData.</param>
-        /// <param name="month">The month.</param>
-        /// <returns>
-        ///     Data for a specific month
-        /// </returns>
-        public static List<DailyCovidStat> FilterDataByMonth(List<DailyCovidStat> data, int month)
-        {
-            return data.Where(currentDay => currentDay.Date.Month == month).ToList();
-        }
-
         #endregion
     }
 }

@@ -6,10 +6,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CovidAnalysisTests
 {
-    /// Input: {}                               OutPut: ArgumentOutOfRangeException
-    /// Input: {333, 222, 100, 200}             OutPut: 333
-    /// Input: {0, 0, 100, 200}                 OutPut: 200
-    /// Input: {33, 2, 555, 200, 300}           OutPut: 555
+    /// Input ({Positive tests} in a covid statistics List) |Expected value (The highest positive test in the collections
+    /// Input: {}                                           |OutPut: ArgumentOutOfRangeException
+    /// Input: {333, 222, 100, 200}                         |OutPut: 333
+    /// Input: {0, 0, 100, 200}                             |OutPut: 200
+    /// Input: {33, 2, 555, 200, 300}                       |OutPut: 555
     [TestClass]
     public class FindMaxPositiveTests
     {

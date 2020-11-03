@@ -120,7 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CovidCollection\AddTests.cs" />
-    <Compile Include="CovidCollection\CalculateAverageCurrentlyHospitalizedTests - Copy.cs" />
+    <Compile Include="CovidCollection\CalculateOverallPositivityTests.cs" />
     <Compile Include="CovidCollection\FindMinLowestTotalTests.cs" />
     <Compile Include="CovidCollection\FindMaxPositiveTests.cs" />
     <Compile Include="CovidCollection\CalculateAveragePositiveTestsSinceFirstTests.cs" />

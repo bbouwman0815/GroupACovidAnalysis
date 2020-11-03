@@ -21,7 +21,7 @@ namespace Covid19Analysis
     /// <summary>
     ///     An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage
     {
         #region Data members
 
@@ -98,14 +98,6 @@ namespace Covid19Analysis
         /// The region.
         /// </value>
         public string Region { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the errors.
-        /// </summary>
-        /// <value>
-        ///     The errors.
-        /// </value>
-        public string Errors { get; set; }
 
         /// <summary>
         ///     Gets or sets the added daily covid stat.
@@ -197,7 +189,7 @@ namespace Covid19Analysis
 
         private async void processFile(StorageFile selectedFile)
         {
-            var fileContent = string.Empty;
+            string fileContent;
             var fileToRead = await selectedFile.OpenAsync(FileAccessMode.Read);
             _ = new FileInfo(selectedFile.Path);
 
@@ -248,7 +240,7 @@ namespace Covid19Analysis
                 {
                     if (!hasReplaceAllSelected)
                     {
-                        var result = await existingCovidDay.ShowAsync();
+                        await existingCovidDay.ShowAsync();
                     }
 
                     if (existingCovidDay.Result == Result.Replace)
@@ -272,6 +264,7 @@ namespace Covid19Analysis
                 }
                 catch
                 {
+                    throw new ArgumentException();
                 }
 
                 this.updateSummary();
@@ -330,11 +323,13 @@ namespace Covid19Analysis
             this.SummaryReport =
                 new SummaryReport(this.Region, this.FileLoader.LoadedCovidStats, this.LowerBound, this.UpperBound,
                     this.HistogramBinSize);
+            this.dataListView.ItemsSource = this.FileLoader.LoadedCovidStats.ToList();
         }
 
         private void clearSummary()
         {
             this.FileLoader.LoadedCovidStats.Clear();
+            this.dataListView.ItemsSource = this.FileLoader.LoadedCovidStats.ToList();
         }
 
         private void displayErrorsButton_Click(object sender, RoutedEventArgs e)
@@ -394,7 +389,7 @@ namespace Covid19Analysis
         {
             var duplicateStatContentDialog = new DuplicateStatContentDialog(this.AddedStat);
 
-            var duplicateDialogResult = await duplicateStatContentDialog.ShowAsync();
+            await duplicateStatContentDialog.ShowAsync();
 
             if (duplicateStatContentDialog.Result == Result.Replace)
             {
@@ -434,7 +429,7 @@ namespace Covid19Analysis
             await errorDialog.ShowAsync();
         }
 
-        private void saveDataButton_Click(object sender, RoutedEventArgs e)
+        private void saveData_Click(object sender, RoutedEventArgs e)
         {
             var collectionToSave = CollectionFilters.FilterByRegion(this.FileLoader.LoadedCovidStats.ToList(), Region);
             var fileSaver = new FileSaver(collectionToSave);
@@ -485,19 +480,55 @@ namespace Covid19Analysis
         private async void DisplayDailyStatDetailsButton_OnClick(object sender, RoutedEventArgs e)
         {
             var selectedItem = this.dataListView.SelectedItem;
-            if (selectedItem.GetType().Equals(typeof(DailyCovidStat)))
+            if (selectedItem == null || selectedItem.GetType() != typeof(DailyCovidStat))
             {
-                DailyCovidStat selectedStat = selectedItem as DailyCovidStat;
-                var displayStatDetails = new DisplayStatDetailsContentDialog(selectedStat.GetsFullFormattedString());
-
-                await displayStatDetails.ShowAsync();
+                return;
             }
+
+            DailyCovidStat selectedStat = selectedItem as DailyCovidStat;
+            if (selectedStat == null)
+            {
+                return;
+            }
+
+            var displayStatDetails = new DisplayStatDetailsContentDialog(selectedStat.GetsFullFormattedString());
+
+            await displayStatDetails.ShowAsync();
 
         }
 
         private void DataListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.displayDailyStatDetailsButton.IsEnabled = true;
+            this.editSelectedDayButton.IsEnabled = true;
+            this.deleteSelectedDayButton.IsEnabled = true;
+        }
+
+        private void deleteSelectedDayButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = this.dataListView.SelectedItem;
+
+            if (selectedItem == null || selectedItem.GetType() != typeof(DailyCovidStat))
+            {
+                return;
+            }
+
+            DailyCovidStat selectedStat = selectedItem as DailyCovidStat;
+            this.FileLoader.LoadedCovidStats.Remove(selectedStat);
+            this.dataListView.ItemsSource = this.FileLoader.LoadedCovidStats.ToList();
+        }
+
+        private async void EditSelectedDayButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = this.dataListView.SelectedItem;
+            if (selectedItem.GetType().Equals(typeof(DailyCovidStat)))
+            {
+                DailyCovidStat selectedStat = (DailyCovidStat) selectedItem;
+                var editContentDialog = new EditDailyStatContentDialog(selectedStat);
+                
+                await editContentDialog.ShowAsync();
+                
+            }
         }
     }
 }

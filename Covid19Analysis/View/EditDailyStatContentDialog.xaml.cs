@@ -7,12 +7,12 @@ using Covid19Analysis.Model;
 namespace Covid19Analysis.View
 {
     /// <summary>
-    ///     Brings up a content dialog allowing the user to manually enter a daily covid statistic
+    ///     Brings up a content dialog allowing the user to manually edita daily covid statistic
     /// </summary>
     /// <seealso cref="Windows.UI.Xaml.Controls.ContentDialog" />
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
-    public sealed partial class AddDailyStatContentDialog
+    public sealed partial class EditDailyStatContentDialog
     {
         #region Data members
 
@@ -52,9 +52,9 @@ namespace Covid19Analysis.View
         public int Death;
 
         /// <summary>
-        ///     The added daily covid stat
+        ///     The edited daily covid stat
         /// </summary>
-        public DailyCovidStat AddedDailyCovidStat;
+        public DailyCovidStat EditDailyCovidStat;
 
         #endregion
 
@@ -63,10 +63,17 @@ namespace Covid19Analysis.View
         /// <summary>
         ///     Initializes a new instance of the <see cref="AddDailyStatContentDialog" /> class.
         /// </summary>
-        public AddDailyStatContentDialog()
+        public EditDailyStatContentDialog(DailyCovidStat selectedStat)
         {
             this.InitializeComponent();
             this.datePicker.MaxDate = DateTimeOffset.Now;
+            this.datePicker.Date = selectedStat.Date;
+            this.regionTextBox.Text = selectedStat.Region;
+            this.hospitalizationCountTextBox.Text = selectedStat.HospitalizedIncrease.ToString();
+            this.hospitalizedCurrentlyTextBox.Text = selectedStat.HospitalizedCurrently.ToString();
+            this.positiveTestsTextBox.Text = selectedStat.PositiveIncrease.ToString();
+            this.negativeTestsTextBox.Text = selectedStat.NegativeIncrease.ToString();
+            this.deathCountTextBox.Text = selectedStat.DeathIncrease.ToString();
         }
 
         #endregion
@@ -91,7 +98,7 @@ namespace Covid19Analysis.View
 
             try
             {
-                this.AddedDailyCovidStat = new DailyCovidStat(this.Date, this.Region, this.PositiveTestCount,
+                this.EditDailyCovidStat = new DailyCovidStat(this.Date, this.Region, this.PositiveTestCount,
                     this.NegativeTestCount, this.HospitalizedCurrently, this.HospitalizationCount, this.Death);
             }
             catch
