@@ -12,6 +12,7 @@ using Covid19Analysis.Model;
 using Covid19Analysis.Report;
 using Covid19Analysis.Utility;
 using Covid19Analysis.View;
+using Covid19Analysis.ViewModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -122,6 +123,7 @@ namespace Covid19Analysis
         /// </value>
         public FileLoader FileLoader { get; }
 
+
         #endregion
 
         #region Constructors
@@ -132,13 +134,13 @@ namespace Covid19Analysis
         public MainPage()
         {
             this.InitializeComponent();
+            
             this.HistogramBinSize = DefaultHistogramBinSize;
             this.Region = DefaultRegion;
             this.FileLoader = new FileLoader();
             this.SummaryReport = new SummaryReport(DefaultRegion, this.FileLoader.LoadedCovidStats, DefaultLowerBound,
                 DefaultUpperBound,
                 DefaultHistogramBinSize);
-            this.dataListView.ItemsSource = this.FileLoader.LoadedCovidStats;
 
             ApplicationView.PreferredLaunchViewSize = new Size {Width = ApplicationWidth, Height = ApplicationHeight};
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;

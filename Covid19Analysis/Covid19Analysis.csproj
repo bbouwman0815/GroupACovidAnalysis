@@ -121,11 +121,13 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Comparers\GeneralComparer.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\TotalCovidStats.cs" />
     <Compile Include="Model\DailyCovidStat.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CollectionQueries\CheckMultipleMinMax.cs" />
     <Compile Include="Report\MonthlyReport.cs" />
@@ -136,6 +138,7 @@
     <Compile Include="Utility\FileSaver.cs" />
     <Compile Include="Utility\CollectionFilters.cs" />
     <Compile Include="Utility\SummaryFormatTools.cs" />
+    <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="View\DisplayStatDetailsContentDialog.xaml.cs">
       <DependentUpon>DisplayStatDetailsContentDialog.xaml</DependentUpon>
     </Compile>
