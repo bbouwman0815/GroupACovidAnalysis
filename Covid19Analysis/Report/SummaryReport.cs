@@ -50,21 +50,9 @@ namespace Covid19Analysis.Report
         /// </value>
         public string Region { get; set; }
 
-        /// <summary>
-        ///     Gets or sets the Region Data.
-        /// </summary>
-        /// <value>
-        ///     The Region Data.
-        /// </value>
-        public Dictionary<string, List<DailyCovidStat>> RegionData { get; set; }
+        private Dictionary<string, List<DailyCovidStat>> RegionData { get; set; }
 
-        /// <summary>
-        ///     Gets or sets the monthly Data.
-        /// </summary>
-        /// <value>
-        ///     The monthly Data.
-        /// </value>
-        public Dictionary<string, List<DailyCovidStat>> MonthlyData { get; set; }
+        private Dictionary<string, List<DailyCovidStat>> MonthlyData { get; set; }
 
         /// <summary>
         ///     Gets or sets the number formatter.

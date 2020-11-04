@@ -438,13 +438,14 @@ namespace Covid19Analysis
 
         private async void SelectStateButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var getRegion = new StateContentDialog();
+            var getRegion = new StateContentDialog(this.FileLoader.LoadedCovidStats);
 
             var result = await getRegion.ShowAsync();
 
             if (result == ContentDialogResult.Primary)
             {
-                if (!this.SummaryReport.RegionData.ContainsKey(getRegion.Region))
+                var regionalData = this.FileLoader.LoadedCovidStats.CreateRegionalDictionary(this.FileLoader.LoadedCovidStats.ToList());
+                if (!regionalData.ContainsKey(getRegion.Region))
                 {
                     this.displayStateError();
                     this.Region = DefaultRegion;

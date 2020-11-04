@@ -177,7 +177,14 @@ namespace Covid19Analysis.Model
             return this.GetEnumerator();
         }
 
-        private static string[] findRegions(IEnumerable<DailyCovidStat> data)
+        /// <summary>
+        /// Finds the regions from a set of data.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <returns>
+        /// the different regions of a set of data
+        /// </returns>
+        public static string[] FindRegions(IEnumerable<DailyCovidStat> data)
         {
             var regionalData = new Dictionary<string, List<DailyCovidStat>>();
 
@@ -200,7 +207,7 @@ namespace Covid19Analysis.Model
         /// </returns>
         public Dictionary<string, List<DailyCovidStat>> CreateRegionalDictionary(List<DailyCovidStat> data)
         {
-            var regions = findRegions(data);
+            var regions = FindRegions(data);
             var dictionary = new Dictionary<string, List<DailyCovidStat>>();
 
             foreach (var t in regions)

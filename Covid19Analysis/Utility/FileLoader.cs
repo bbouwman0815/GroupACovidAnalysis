@@ -64,6 +64,7 @@ namespace Covid19Analysis.Utility
         /// </value>
         public DailyCovidStat AddedStat { get; set; }
 
+
         #endregion
 
         #region Constructors
