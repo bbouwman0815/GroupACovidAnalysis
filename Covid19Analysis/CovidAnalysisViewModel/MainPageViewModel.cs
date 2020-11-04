@@ -342,8 +342,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
                 this.AllStatistics.Add(addedStat);
                 this.updateSummary();
             }
-        
-    }
+        }
 
         private bool CanSaveFile(object obj)
         {
