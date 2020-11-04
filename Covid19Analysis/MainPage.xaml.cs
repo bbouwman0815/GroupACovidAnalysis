@@ -321,7 +321,7 @@ namespace Covid19Analysis
             this.SummaryReport =
                 new SummaryReport(this.Region, this.FileLoader.LoadedCovidStats, this.LowerBound, this.UpperBound,
                     this.HistogramBinSize);
-            this.dataListView.ItemsSource = this.FileLoader.LoadedCovidStats.ToList();
+            this.dataListView.ItemsSource = this.SummaryReport.RegionData[this.Region];
         }
 
         private void clearSummary()
@@ -514,6 +514,18 @@ namespace Covid19Analysis
             DailyCovidStat selectedStat = selectedItem as DailyCovidStat;
             this.FileLoader.LoadedCovidStats.Remove(selectedStat);
             this.dataListView.ItemsSource = this.FileLoader.LoadedCovidStats.ToList();
+        }
+        private async void EditSelectedDayButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = this.dataListView.SelectedItem;
+            if (selectedItem.GetType().Equals(typeof(DailyCovidStat)))
+            {
+                DailyCovidStat selectedStat = (DailyCovidStat)selectedItem;
+                var editContentDialog = new EditDailyStatContentDialog(selectedStat);
+
+                await editContentDialog.ShowAsync();
+
+            }
         }
     }
 }
