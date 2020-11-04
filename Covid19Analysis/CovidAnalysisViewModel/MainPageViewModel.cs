@@ -515,6 +515,10 @@ namespace Covid19Analysis.CovidAnalysisViewModel
             var editContentDialog = new EditDailyStatContentDialog(this.SelectedStat);
 
             await editContentDialog.ShowAsync();
+            this.AllStatistics.Remove(this.SelectedStat);
+            this.SelectedStat = editContentDialog.EditedDailyCovidStat;
+            this.AllStatistics.Add(SelectedStat);
+            this.updateSummary();
         }
 
         private bool CanDeleteStatistic(object obj)

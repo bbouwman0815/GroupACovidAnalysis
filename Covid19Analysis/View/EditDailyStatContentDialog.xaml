@@ -37,4 +37,5 @@
         <CalendarDatePicker x:Name="datePicker" CalendarIdentifier="GregorianCalendar" Margin="68,197,0,0" VerticalAlignment="Top" Height="36" Width="296" />
 
     </Grid>
+    
 </ContentDialog>
