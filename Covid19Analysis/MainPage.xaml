@@ -28,7 +28,7 @@
         <Button x:Name="getUpperBoundButton" Command="{Binding SetUpperBoundCommand}" Content="Set Upper Bound" Margin="470,151,0,0" VerticalAlignment="Top" Width="137"/>
         <Button x:Name="getHistogramButton" Command="{Binding SetHistogramCommand}" Content="Set Histogram bin" Margin="470,188,0,0" VerticalAlignment="Top" Width="137" />
         <Button x:Name="displaySummaryButton" Command="{Binding DisplaySummaryCommand}" Content="Display Summary" Margin="470,255,0,0" VerticalAlignment="Top" Width="137"/>
-        <Button x:Name="displayErrorsButton" Command="{Binding DisplayErrorCommand}" Content="Display Errors" Margin="470,292,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.338,-0.869" Width="137"/>
+        <Button x:Name="displayErrorsButton" Command="{Binding DisplayErrorsCommand}" Content="Display Errors" Margin="470,292,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.338,-0.869" Width="137"/>
         <Button x:Name="clearDataButton" Command="{Binding ClearAllDataCommand}" Content="Clear All Data" Margin="470,356,15,0" VerticalAlignment="Top" RenderTransformOrigin="-1.137,0.504" HorizontalAlignment="Stretch"/>
         <TextBlock x:Name="listViewHeaderTextBlock" HorizontalAlignment="Left" Margin="29,77,0,0" Text="Select a date to display, edit, or delete" TextWrapping="Wrap" VerticalAlignment="Top" Width="416"/>
     </Grid>
