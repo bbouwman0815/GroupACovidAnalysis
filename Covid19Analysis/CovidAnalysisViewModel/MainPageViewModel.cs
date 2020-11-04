@@ -368,7 +368,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
                 if (!regionalData.ContainsKey(getRegion.Region))
                 {
                     this.displayStateError();
-                    this.Region = String.Empty;
+                    this.Region = string.Empty;
                 }
                 else
                 {
@@ -701,12 +701,12 @@ namespace Covid19Analysis.CovidAnalysisViewModel
                 this.Statistics = this.AllStatistics.ToObservableCollection();
             }
             else
-            {
+            { 
                 regionalData[this.Region].Sort();
 
-            this.Statistics = regionalData[this.Region].ToObservableCollection();
+                this.Statistics = regionalData[this.Region].ToObservableCollection();
             }
-    }
+        }
 
 
 private async void displayStateError()

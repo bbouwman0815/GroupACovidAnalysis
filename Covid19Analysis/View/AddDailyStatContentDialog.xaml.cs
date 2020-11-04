@@ -87,7 +87,7 @@ namespace Covid19Analysis.View
             this.HospitalizationCount = int.Parse(this.hospitalizationCountTextBox.Text);
             this.NegativeTestCount = int.Parse(this.negativeTestsTextBox.Text);
             this.PositiveTestCount = int.Parse(this.positiveTestsTextBox.Text);
-            this.Region = this.regionTextBox.Text;
+            this.Region = this.regionTextBox.Text.ToUpper();
 
             try
             {
