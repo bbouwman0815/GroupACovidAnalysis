@@ -8,6 +8,7 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml.Controls;
 using Covid19Analysis.Annotations;
+using Covid19Analysis.CollectionQueries;
 using Covid19Analysis.Extensions;
 using Covid19Analysis.Model;
 using Covid19Analysis.Report;
@@ -40,9 +41,16 @@ namespace Covid19Analysis.CovidAnalysisViewModel
         /// </summary>
         public const int DefaultHistogramBinSize = 500;
 
+        /// <summary>
+        /// Gets or sets all statistics.
+        /// </summary>
+        /// <value>
+        /// All statistics.
+        /// </value>
         public TotalCovidStats AllStatistics;
 
         private DailyCovidStat selectedStat;
+        private ObservableCollection<DailyCovidStat> statistic;
 
         #endregion
 
@@ -102,6 +110,8 @@ namespace Covid19Analysis.CovidAnalysisViewModel
                 this.selectedStat = value;
                 this.OnPropertyChanged();
                 this.DeleteCommand.OnCanExecuteChanged();
+                this.EditCommand.OnCanExecuteChanged();
+                this.DisplayDetailsCommand.OnCanExecuteChanged();
             }
         }
 
@@ -113,38 +123,171 @@ namespace Covid19Analysis.CovidAnalysisViewModel
         /// </value>
         public FileLoader FileLoader { get; }
 
-        public ObservableCollection<DailyCovidStat> Statistics { get; set; }
+        /// <summary>
+        /// Gets or sets the statistics.
+        /// </summary>
+        /// <value>
+        /// The statistics.
+        /// </value>
+        public ObservableCollection<DailyCovidStat> Statistics
+        {
+            get { return statistic; }
+            set
+            {
+                this.statistic = value;
 
+                this.OnPropertyChanged();
+                this.ClearAllDataCommand.OnCanExecuteChanged();
+                this.DisplaySummaryCommand.OnCanExecuteChanged();
+                this.DisplayErrorsCommand.OnCanExecuteChanged();
+                this.DisplayDetailsCommand.OnCanExecuteChanged();
+                this.SetUpperBoundCommand.OnCanExecuteChanged();
+                this.SetLowerBoundCommand.OnCanExecuteChanged();
+                this.SetHistogramCommand.OnCanExecuteChanged();
+                this.SaveFileCommand.OnCanExecuteChanged();
+                this.SetStateCommand.OnCanExecuteChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the delete command.
+        /// </summary>
+        /// <value>
+        /// The delete command.
+        /// </value>
         public RelayCommand DeleteCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the edit command.
+        /// </summary>
+        /// <value>
+        /// The edit command.
+        /// </value>
         public RelayCommand EditCommand { get; set; }
 
+        /// <summary>
+        /// Gets or sets the display details command.
+        /// </summary>
+        /// <value>
+        /// The display details command.
+        /// </value>
         public RelayCommand DisplayDetailsCommand { get; set; }
 
+        /// <summary>
+        /// Gets or sets the load file command.
+        /// </summary>
+        /// <value>
+        /// The load file command.
+        /// </value>
         public RelayCommand LoadFileCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the clear all data command.
+        /// </summary>
+        /// <value>
+        /// The clear all data command.
+        /// </value>
+        public RelayCommand ClearAllDataCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the set state command.
+        /// </summary>
+        /// <value>
+        /// The set state command.
+        /// </value>
+        public RelayCommand SetStateCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the set upper bound command.
+        /// </summary>
+        /// <value>
+        /// The set upper bound command.
+        /// </value>
+        public RelayCommand SetUpperBoundCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the set lower bound command.
+        /// </summary>
+        /// <value>
+        /// The set lower bound command.
+        /// </value>
+        public RelayCommand SetLowerBoundCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the display errors command.
+        /// </summary>
+        /// <value>
+        /// The display errors command.
+        /// </value>
+        public RelayCommand DisplayErrorsCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the display summary command.
+        /// </summary>
+        /// <value>
+        /// The display summary command.
+        /// </value>
+        public RelayCommand DisplaySummaryCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the set histogram command.
+        /// </summary>
+        /// <value>
+        /// The set histogram command.
+        /// </value>
+        public RelayCommand SetHistogramCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the save file command.
+        /// </summary>
+        /// <value>
+        /// The save file command.
+        /// </value>
+        public RelayCommand SaveFileCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the add statistic command.
+        /// </summary>
+        /// <value>
+        /// The add statistic command.
+        /// </value>
+        public RelayCommand AddStatisticCommand { get; set; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainPageViewModel"/> class.
+        /// </summary>
         public MainPageViewModel()
         {
-            this.HistogramBinSize = DefaultHistogramBinSize;
-            this.Region = DefaultRegion;
-            this.LowerBound = DefaultLowerBound;
-            this.UpperBound = DefaultUpperBound;
+            this.initializeDefaultValues();
+            this.loadCommands();
             this.FileLoader = new FileLoader();
             this.SummaryReport = new SummaryReport(DefaultRegion, this.FileLoader.LoadedCovidStats, DefaultLowerBound,
                 DefaultUpperBound,
                 DefaultHistogramBinSize);
             this.AllStatistics = new TotalCovidStats();
             this.Statistics = this.AllStatistics.ToObservableCollection();
-            this.loadCommands();
+            
+        }
+
+        private void initializeDefaultValues()
+        {
+            this.HistogramBinSize = DefaultHistogramBinSize;
+            this.Region = DefaultRegion;
+            this.LowerBound = DefaultLowerBound;
+            this.UpperBound = DefaultUpperBound;
         }
 
         #endregion
 
-        #region Methods
-
+        #region Methods        
+        /// <summary>
+        /// Occurs when a property value changes.
+        /// </summary>
+        /// <returns></returns>
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void loadCommands()
@@ -154,6 +297,197 @@ namespace Covid19Analysis.CovidAnalysisViewModel
             this.DisplayDetailsCommand =
                 new RelayCommand(this.DisplayStatisticDetails, this.CanDisplayStatisticDetails);
             this.LoadFileCommand = new RelayCommand(this.LoadFile, this.CanLoadFile);
+            this.ClearAllDataCommand = new RelayCommand(this.ClearAllStatistics, this.CanClearAllStatistics);
+            this.DisplayErrorsCommand = new RelayCommand(DisplayErrors, CanDisplayErrors);
+            this.DisplaySummaryCommand = new RelayCommand(DisplaySummary, CanDisplaySummary);
+            this.SetHistogramCommand = new RelayCommand(SetHistogram, CanSetHistogram);
+            this.SetStateCommand = new RelayCommand(SetState, CanSetState);
+            this.SetLowerBoundCommand = new RelayCommand(SetLowerBound, CanSetLowerBound);
+            this.SetUpperBoundCommand = new RelayCommand(SetUpperBound, CanSetUpperBound);
+            this.SaveFileCommand = new RelayCommand(SaveFile, CanSaveFile);
+            this.AddStatisticCommand = new RelayCommand(AddStatistic, CanAddStatistic);
+        }
+
+        private bool CanAddStatistic(object obj)
+        {
+            return true;
+        }
+
+        private async void AddStatistic(object obj)
+        {
+            var addNewDailyCovidStat = new AddDailyStatContentDialog();
+
+            var result = await addNewDailyCovidStat.ShowAsync();
+            DailyCovidStat addedStat = null;
+            if (result != ContentDialogResult.Primary)
+            {
+                return;
+            }
+
+            if (addNewDailyCovidStat.Death < 0 || addNewDailyCovidStat.PositiveTestCount < 0 ||
+                addNewDailyCovidStat.NegativeTestCount < 0 || addNewDailyCovidStat.HospitalizationCount < 0)
+            {
+                this.displayAddError();
+                return;
+            }
+
+            addedStat = addNewDailyCovidStat.AddedDailyCovidStat;
+            if (CheckMultipleMinMax.CheckSpecificDuplicate(addedStat, this.FileLoader.LoadedCovidStats.ToList()))
+            {
+                this.handleAddWithDuplicates(addedStat);
+            }
+
+            if (!CheckMultipleMinMax.CheckSpecificDuplicate(addedStat, this.FileLoader.LoadedCovidStats.ToList()))
+            {
+                this.AllStatistics.Add(addedStat);
+                this.updateSummary();
+            }
+        
+    }
+
+        private bool CanSaveFile(object obj)
+        {
+           return this.AllStatistics.Count > 0;
+        }
+
+        private void SaveFile(object obj)
+        {
+            var collectionToSave = CollectionFilters.FilterByRegion(this.FileLoader.LoadedCovidStats.ToList(), Region);
+            var fileSaver = new FileSaver(collectionToSave);
+            fileSaver.Initialize();
+        }
+
+        private async void SetState(object obj)
+        {
+            var getRegion = new StateContentDialog(this.FileLoader.LoadedCovidStats);
+
+            var result = await getRegion.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                var regionalData =
+                    this.FileLoader.LoadedCovidStats.CreateRegionalDictionary(this.FileLoader.LoadedCovidStats
+                        .ToList());
+                if (!regionalData.ContainsKey(getRegion.Region))
+                {
+                    this.displayStateError();
+                    this.Region = DefaultRegion;
+                }
+                else
+                {
+                    this.Region = getRegion.Region;
+                    this.updateSummary();
+                }
+            }
+        }
+
+        private async void SetHistogram(object obj)
+        {
+            var getBinSize = new HistogramBinContentDialog();
+
+            var result = await getBinSize.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                if (getBinSize.BinSize > 0)
+                {
+                    this.HistogramBinSize = getBinSize.BinSize;
+                    this.updateSummary();
+                }
+                else
+                {
+                    this.displayHistogramError();
+                }
+            }
+        }
+        private async void displayHistogramError()
+        {
+            var errorDialog = new ContentDialog
+            {
+                Title = "Set Histogram Bin Error",
+                Content = "Unable to set. Make sure the number is positive",
+                CloseButtonText = "Close"
+            };
+            await errorDialog.ShowAsync();
+        }
+        private async void SetLowerBound(object obj)
+        {
+            var getLowerBound = new LowerBoundContentDialog();
+
+            var result = await getLowerBound.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                this.LowerBound = getLowerBound.Bound;
+                this.updateSummary();
+            }
+        }
+
+        private async void SetUpperBound(object obj)
+        {
+            var getUpperBound = new UpperBoundContentDialog();
+
+            var result = await getUpperBound.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                this.UpperBound = getUpperBound.Bound;
+                this.updateSummary();
+            }
+        }
+
+        private async void DisplaySummary(object obj)
+        {
+            var displaySummary = new SummaryContentDialog(this.SummaryReport.GenerateDataForRegion());
+
+            await displaySummary.ShowAsync();
+        }
+
+        private bool CanSetUpperBound(object obj)
+        {
+            return this.AllStatistics.Count > 0;
+        }
+
+        private bool CanSetLowerBound(object obj)
+        {
+            return this.AllStatistics.Count > 0;
+        }
+
+        private bool CanSetState(object obj)
+        {
+            return this.AllStatistics.Count > 0;
+        }
+
+        private bool CanSetHistogram(object obj)
+        {
+            return this.AllStatistics.Count > 0;
+        }
+
+        private bool CanDisplaySummary(object obj)
+        {
+            return this.AllStatistics.Count > 0;
+        }
+
+        private bool CanDisplayErrors(object obj)
+        {
+            return this.AllStatistics.Count > 0;
+        }
+
+        private void DisplayErrors(object obj)
+        {
+            this.displayLineErrorDialog();
+        }
+
+        private bool CanClearAllStatistics(object obj)
+        {
+            return this.AllStatistics.Count > 0;
+        }
+
+        private void ClearAllStatistics(object obj)
+        { 
+            this.AllStatistics.Clear() ;
+            this.FileLoader.Errors = string.Empty;
+            this.Statistics = this.AllStatistics.ToObservableCollection();
         }
 
         private bool CanLoadFile(object obj)
@@ -205,12 +539,12 @@ namespace Covid19Analysis.CovidAnalysisViewModel
         private void LoadFile(object obj)
         {
             this.FileLoader.DuplicateData.Clear();
-            if (this.FileLoader.LoadedCovidStats.ContainsData())
+            if (this.AllStatistics.ContainsData())
             {
                 this.displayExistingFileDialog();
             }
 
-            if (!this.FileLoader.LoadedCovidStats.ContainsData())
+            if (!this.AllStatistics.ContainsData())
             {
                 this.loadAndReadFile();
             }
@@ -259,8 +593,9 @@ namespace Covid19Analysis.CovidAnalysisViewModel
             fileContent = fileContent.Replace("\r", string.Empty);
 
             this.FileLoader.LoadFile(fileContent);
+            this.AllStatistics = this.FileLoader.LoadedCovidStats;
             this.handleDuplicateDays();
-             this.updateSummary();
+            this.updateSummary();
         }
 
         private void handleDuplicateDays()
@@ -280,6 +615,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
             if (result == ContentDialogResult.Primary)
             {
                 this.FileLoader.LoadedCovidStats.Clear();
+                this.AllStatistics.Clear();
                 this.loadAndReadFile();
             }
 
@@ -304,7 +640,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
 
                     if (existingCovidDay.Result == Result.Replace)
                     {
-                        this.FileLoader.LoadedCovidStats.ReplaceDuplicate(currentDay);
+                        this.AllStatistics.ReplaceDuplicate(currentDay);
                         this.FileLoader.DuplicateData.Remove(currentDay);
                     }
 
@@ -334,7 +670,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
         {
             foreach (var currentDuplicate in this.FileLoader.DuplicateData.ToList())
             {
-                this.FileLoader.LoadedCovidStats.ReplaceDuplicate(currentDuplicate);
+                this.AllStatistics.ReplaceDuplicate(currentDuplicate);
                 this.FileLoader.DuplicateData.Remove(currentDuplicate);
             }
         }
@@ -353,14 +689,46 @@ namespace Covid19Analysis.CovidAnalysisViewModel
         private void updateSummary()
         {
             this.SummaryReport =
-                new SummaryReport(this.Region, this.FileLoader.LoadedCovidStats, this.LowerBound, this.UpperBound,
+                new SummaryReport(this.Region, this.AllStatistics, this.LowerBound, this.UpperBound,
                     this.HistogramBinSize);
-            this.AllStatistics = this.FileLoader.LoadedCovidStats;
-            this.Statistics = this.AllStatistics.ToObservableCollection();
+            var regionalData = this.AllStatistics.CreateRegionalDictionary(this.FileLoader.LoadedCovidStats.ToList());
+            regionalData[this.Region].Sort();
+            this.Statistics = regionalData[this.Region].ToObservableCollection();
+    }
+
+        private async void displayStateError()
+        {
+            var stateDialog = new ContentDialog
+            {
+                Title = "Set State Error",
+                Content = "Unable to set. There isn't any data with selected state",
+                CloseButtonText = "Close"
+            };
+            await stateDialog.ShowAsync();
+        }
+        private async void displayAddError()
+        {
+            var errorDialog = new ContentDialog
+            {
+                Title = "Add Error",
+                Content = "Unable to add. Make sure all fields are correct.",
+                CloseButtonText = "Close"
+            };
+            await errorDialog.ShowAsync();
         }
 
+        private async void handleAddWithDuplicates(DailyCovidStat addedStat)
+        {
+            var duplicateStatContentDialog = new DuplicateStatContentDialog(addedStat);
 
-        
+            await duplicateStatContentDialog.ShowAsync();
+
+            if (duplicateStatContentDialog.Result == Result.Replace)
+            {
+                this.AllStatistics.ReplaceDuplicate(addedStat);
+                this.updateSummary();
+            }
+        }
 
         #endregion
     }

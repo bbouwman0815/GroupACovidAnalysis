@@ -13,23 +13,23 @@
                 <Grid/>
             </CommandBar.Content>
             <AppBarButton Icon="openFile" Label="Load File" Command="{Binding LoadFileCommand}"/>
-            <AppBarButton Icon="save" Label="Save File" Click="saveData_Click"></AppBarButton>
+            <AppBarButton Icon="save" Label="Save File" Command="{Binding SaveFileCommand}"/>
 
         </CommandBar>
 
         <TextBlock HorizontalAlignment="Left" Margin="12,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="COVID-19 Analysis"/>
         <ListView x:Name="dataListView"  ItemsSource="{Binding Path=Statistics, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedStat, Mode=TwoWay}" Margin="29,108,177,93" />
-        <Button x:Name="addDataButton" Content="Add" Margin="30,356,0,0" VerticalAlignment="Top" Width="50" Click="addDataButton_Click" RenderTransformOrigin="1.292,0.656"/>
+        <Button x:Name="addDataButton" Command="{Binding AddStatisticCommand}" Content="Add" Margin="30,356,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="1.292,0.656"/>
         <Button x:Name="displayDailyStatDetailsButton" Command="{Binding DisplayDetailsCommand}" Content="Display Details" Margin="85,356,0,0" Width="114"  VerticalAlignment="Top" RenderTransformOrigin="0.51,0.125"></Button>
         <Button x:Name="editSelectedDayButton" Command="{Binding EditCommand}" Content="Edit" Margin="204,356,0,0" VerticalAlignment="Top" Width="56" />
         <Button x:Name="deleteSelectedDayButton" Command="{Binding DeleteCommand}" Content="Delete" Margin="265,356,0,0" VerticalAlignment="Top" />
-        <Button x:Name="selectStateButton" Content="Set State" Margin="470,79,0,0" VerticalAlignment="Top" Width="137" Click="SelectStateButton_OnClick" Height="30"/>
-        <Button x:Name="getLowerBoundButton" Content="Set Lower Bound" Margin="470,114,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.046,0.647" Click="getLowerBoundButton_Click" Width="137"/>
-        <Button x:Name="getUpperBoundButton" Content="Set Upper Bound" Margin="470,151,0,0" VerticalAlignment="Top" Click="getUpperBoundButton_Click" Width="137"/>
-        <Button x:Name="getHistogramButton" Content="Set Histogram bin" Margin="470,188,0,0" VerticalAlignment="Top" Width="137" Click="getHistogramButton_Click" />
-        <Button x:Name="displaySummaryButton" Content="Display Summary" Margin="470,255,0,0" VerticalAlignment="Top" Width="137" Click="DisplaySummaryButton_OnClick"/>
-        <Button x:Name="displayErrorsButton" Content="Display Errors" Margin="470,292,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.338,-0.869" Click="displayErrorsButton_Click" Width="137"/>
-        <Button x:Name="clearDataButton" Content="Clear All Data" Margin="470,356,15,0" VerticalAlignment="Top" RenderTransformOrigin="-1.137,0.504" Click="clearDataButton_Click" HorizontalAlignment="Stretch"/>
+        <Button x:Name="selectStateButton" Command="{Binding SetStateCommand}" Content="Set State" Margin="470,79,0,0" VerticalAlignment="Top" Width="137" Height="30"/>
+        <Button x:Name="getLowerBoundButton" Command="{Binding SetLowerBoundCommand}" Content="Set Lower Bound" Margin="470,114,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.046,0.647" Width="137"/>
+        <Button x:Name="getUpperBoundButton" Command="{Binding SetUpperBoundCommand}" Content="Set Upper Bound" Margin="470,151,0,0" VerticalAlignment="Top" Width="137"/>
+        <Button x:Name="getHistogramButton" Command="{Binding SetHistogramCommand}" Content="Set Histogram bin" Margin="470,188,0,0" VerticalAlignment="Top" Width="137" />
+        <Button x:Name="displaySummaryButton" Command="{Binding DisplaySummaryCommand}" Content="Display Summary" Margin="470,255,0,0" VerticalAlignment="Top" Width="137"/>
+        <Button x:Name="displayErrorsButton" Command="{Binding DisplayErrorCommand}" Content="Display Errors" Margin="470,292,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.338,-0.869" Width="137"/>
+        <Button x:Name="clearDataButton" Command="{Binding ClearAllDataCommand}" Content="Clear All Data" Margin="470,356,15,0" VerticalAlignment="Top" RenderTransformOrigin="-1.137,0.504" HorizontalAlignment="Stretch"/>
         <TextBlock x:Name="listViewHeaderTextBlock" HorizontalAlignment="Left" Margin="29,77,0,0" Text="Select a date to display, edit, or delete" TextWrapping="Wrap" VerticalAlignment="Top" Width="416"/>
     </Grid>
     <Page.DataContext>
