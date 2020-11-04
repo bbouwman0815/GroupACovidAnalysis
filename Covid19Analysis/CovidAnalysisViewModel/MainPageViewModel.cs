@@ -336,6 +336,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
 
             if (!CheckMultipleMinMax.CheckSpecificDuplicate(addedStat, this.FileLoader.LoadedCovidStats.ToList()))
             {
+                this.FileLoader.LoadedCovidStats.Add(addedStat);
                 this.AllStatistics.Add(addedStat);
                 this.updateSummary();
             }
@@ -356,7 +357,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
 
         private async void SetState(object obj)
         {
-            var getRegion = new StateContentDialog(this.FileLoader.LoadedCovidStats);
+            var getRegion = new StateContentDialog(this.AllStatistics);
 
             var result = await getRegion.ShowAsync();
 
@@ -693,9 +694,8 @@ namespace Covid19Analysis.CovidAnalysisViewModel
             this.SummaryReport =
                 new SummaryReport(this.Region, this.AllStatistics, this.LowerBound, this.UpperBound,
                     this.HistogramBinSize);
-
             var regionalData =
-                this.AllStatistics.CreateRegionalDictionary(this.FileLoader.LoadedCovidStats.ToList());
+                this.AllStatistics.CreateRegionalDictionary(this.AllStatistics.ToList());
             if (this.Region == String.Empty)
             {
                 this.Statistics = this.AllStatistics.ToObservableCollection();
@@ -703,8 +703,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
             else
             {
                 regionalData[this.Region].Sort();
-
-            this.Statistics = regionalData[this.Region].ToObservableCollection();
+                this.Statistics = regionalData[this.Region].ToObservableCollection();
             }
     }
 
