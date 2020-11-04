@@ -21,10 +21,6 @@ namespace Covid19Analysis.CovidAnalysisViewModel
     {
         #region Data members
 
-        /// <summary>
-        ///     The Region
-        /// </summary>
-        public const string DefaultRegion = "GA";
 
         /// <summary>
         ///     The default upper bound
@@ -265,25 +261,26 @@ namespace Covid19Analysis.CovidAnalysisViewModel
             this.initializeDefaultValues();
             this.loadCommands();
             this.FileLoader = new FileLoader();
-            this.SummaryReport = new SummaryReport(DefaultRegion, this.FileLoader.LoadedCovidStats, DefaultLowerBound,
+            this.SummaryReport = new SummaryReport(this.Region, this.FileLoader.LoadedCovidStats, DefaultLowerBound,
                 DefaultUpperBound,
                 DefaultHistogramBinSize);
             this.AllStatistics = new TotalCovidStats();
             this.Statistics = this.AllStatistics.ToObservableCollection();
-            
+
         }
 
         private void initializeDefaultValues()
         {
             this.HistogramBinSize = DefaultHistogramBinSize;
-            this.Region = DefaultRegion;
+            this.Region = String.Empty;
             this.LowerBound = DefaultLowerBound;
             this.UpperBound = DefaultUpperBound;
         }
 
         #endregion
 
-        #region Methods        
+        #region Methods
+
         /// <summary>
         /// Occurs when a property value changes.
         /// </summary>
@@ -342,11 +339,12 @@ namespace Covid19Analysis.CovidAnalysisViewModel
                 this.AllStatistics.Add(addedStat);
                 this.updateSummary();
             }
+
         }
 
         private bool CanSaveFile(object obj)
         {
-           return this.AllStatistics.Count > 0;
+            return this.AllStatistics.Count > 0;
         }
 
         private void SaveFile(object obj)
@@ -370,7 +368,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
                 if (!regionalData.ContainsKey(getRegion.Region))
                 {
                     this.displayStateError();
-                    this.Region = DefaultRegion;
+                    this.Region = String.Empty;
                 }
                 else
                 {
@@ -399,16 +397,17 @@ namespace Covid19Analysis.CovidAnalysisViewModel
                 }
             }
         }
+
         private async void displayHistogramError()
         {
-            var errorDialog = new ContentDialog
-            {
+            var errorDialog = new ContentDialog {
                 Title = "Set Histogram Bin Error",
                 Content = "Unable to set. Make sure the number is positive",
                 CloseButtonText = "Close"
             };
             await errorDialog.ShowAsync();
         }
+
         private async void SetLowerBound(object obj)
         {
             var getLowerBound = new LowerBoundContentDialog();
@@ -483,8 +482,8 @@ namespace Covid19Analysis.CovidAnalysisViewModel
         }
 
         private void ClearAllStatistics(object obj)
-        { 
-            this.AllStatistics.Clear() ;
+        {
+            this.AllStatistics.Clear();
             this.FileLoader.Errors = string.Empty;
             this.Statistics = this.AllStatistics.ToObservableCollection();
         }
@@ -690,12 +689,23 @@ namespace Covid19Analysis.CovidAnalysisViewModel
             this.SummaryReport =
                 new SummaryReport(this.Region, this.AllStatistics, this.LowerBound, this.UpperBound,
                     this.HistogramBinSize);
-            var regionalData = this.AllStatistics.CreateRegionalDictionary(this.FileLoader.LoadedCovidStats.ToList());
-            regionalData[this.Region].Sort();
+
+            var regionalData =
+                this.AllStatistics.CreateRegionalDictionary(this.FileLoader.LoadedCovidStats.ToList());
+            if (this.Region == String.Empty)
+            {
+                this.Statistics = this.AllStatistics.ToObservableCollection();
+            }
+            else
+            {
+                regionalData[this.Region].Sort();
+
             this.Statistics = regionalData[this.Region].ToObservableCollection();
+            }
     }
 
-        private async void displayStateError()
+
+private async void displayStateError()
         {
             var stateDialog = new ContentDialog
             {
