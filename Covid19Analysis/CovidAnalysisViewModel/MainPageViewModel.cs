@@ -48,6 +48,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
         private DailyCovidStat selectedStat;
         private ObservableCollection<DailyCovidStat> statistic;
 
+
         #endregion
 
         #region Properties
@@ -485,6 +486,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
         private void ClearAllStatistics(object obj)
         {
             this.AllStatistics.Clear();
+            this.Region = string.Empty;
             this.FileLoader.Errors = string.Empty;
             this.Statistics = this.AllStatistics.ToObservableCollection();
         }
