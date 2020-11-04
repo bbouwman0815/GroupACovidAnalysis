@@ -12,17 +12,17 @@
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
-            <AppBarButton Icon="openFile" Label="Load File" Click="loadFile_Click"/>
+            <AppBarButton Icon="openFile" Label="Load File" Command="{Binding LoadFileCommand}"/>
             <AppBarButton Icon="save" Label="Save File" Click="saveData_Click"></AppBarButton>
 
         </CommandBar>
 
         <TextBlock HorizontalAlignment="Left" Margin="12,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="COVID-19 Analysis"/>
-        <ListView x:Name="dataListView" ItemsSource ="{Binding Path=Students,Mode=TwoWay}" SelectedItem="{Binding Path=SelectedStat, Mode=TwoWay}" SelectionChanged="DataListView_OnSelectionChanged" Margin="29,108,177,93" />
+        <ListView x:Name="dataListView"  ItemsSource="{Binding Path=Statistics, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedStat, Mode=TwoWay}" Margin="29,108,177,93" />
         <Button x:Name="addDataButton" Content="Add" Margin="30,356,0,0" VerticalAlignment="Top" Width="50" Click="addDataButton_Click" RenderTransformOrigin="1.292,0.656"/>
-        <Button x:Name="displayDailyStatDetailsButton" Content="Display Details" Margin="85,356,0,0" Width="114" Click="DisplayDailyStatDetailsButton_OnClick" IsEnabled="false" VerticalAlignment="Top" RenderTransformOrigin="0.51,0.125"></Button>
-        <Button x:Name="editSelectedDayButton" Content="Edit" Margin="204,356,0,0" VerticalAlignment="Top" Width="56" IsEnabled="False" Click="EditSelectedDayButton_OnClick"/>
-        <Button x:Name="deleteSelectedDayButton" Content="Delete" Margin="265,356,0,0" VerticalAlignment="Top" Click="deleteSelectedDayButton_Click" IsEnabled="false"/>
+        <Button x:Name="displayDailyStatDetailsButton" Command="{Binding DisplayDetailsCommand}" Content="Display Details" Margin="85,356,0,0" Width="114"  VerticalAlignment="Top" RenderTransformOrigin="0.51,0.125"></Button>
+        <Button x:Name="editSelectedDayButton" Command="{Binding EditCommand}" Content="Edit" Margin="204,356,0,0" VerticalAlignment="Top" Width="56" />
+        <Button x:Name="deleteSelectedDayButton" Command="{Binding DeleteCommand}" Content="Delete" Margin="265,356,0,0" VerticalAlignment="Top" />
         <Button x:Name="selectStateButton" Content="Set State" Margin="470,79,0,0" VerticalAlignment="Top" Width="137" Click="SelectStateButton_OnClick" Height="30"/>
         <Button x:Name="getLowerBoundButton" Content="Set Lower Bound" Margin="470,114,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.046,0.647" Click="getLowerBoundButton_Click" Width="137"/>
         <Button x:Name="getUpperBoundButton" Content="Set Upper Bound" Margin="470,151,0,0" VerticalAlignment="Top" Click="getUpperBoundButton_Click" Width="137"/>

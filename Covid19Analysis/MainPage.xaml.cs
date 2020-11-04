@@ -130,7 +130,7 @@ namespace Covid19Analysis
             this.SummaryReport = new SummaryReport(DefaultRegion, this.FileLoader.LoadedCovidStats, DefaultLowerBound,
                 DefaultUpperBound,
                 DefaultHistogramBinSize);
-            this.dataListView.ItemsSource = this.FileLoader.LoadedCovidStats;
+           // this.dataListView.ItemsSource = this.FileLoader.LoadedCovidStats;
 
             ApplicationView.PreferredLaunchViewSize = new Size {Width = ApplicationWidth, Height = ApplicationHeight};
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
@@ -316,13 +316,6 @@ namespace Covid19Analysis
             }
         }
 
-        private void updateSummary()
-        {
-            this.SummaryReport =
-                new SummaryReport(this.Region, this.FileLoader.LoadedCovidStats, this.LowerBound, this.UpperBound,
-                    this.HistogramBinSize);
-            this.dataListView.ItemsSource = this.SummaryReport.RegionData[this.Region];
-        }
 
         private void clearSummary()
         {
@@ -494,38 +487,5 @@ namespace Covid19Analysis
             await displayStatDetails.ShowAsync();
 
         }
-
-        private void DataListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            this.displayDailyStatDetailsButton.IsEnabled = true;
-            this.editSelectedDayButton.IsEnabled = true;
-            this.deleteSelectedDayButton.IsEnabled = true;
-        }
-
-        private void deleteSelectedDayButton_Click(object sender, RoutedEventArgs e)
-        {
-            var selectedItem = this.dataListView.SelectedItem;
-
-            if (selectedItem == null || selectedItem.GetType() != typeof(DailyCovidStat))
-            {
-                return;
-            }
-
-            DailyCovidStat selectedStat = selectedItem as DailyCovidStat;
-            this.FileLoader.LoadedCovidStats.Remove(selectedStat);
-            this.dataListView.ItemsSource = this.FileLoader.LoadedCovidStats.ToList();
-        }
-        private async void EditSelectedDayButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            var selectedItem = this.dataListView.SelectedItem;
-            if (selectedItem.GetType().Equals(typeof(DailyCovidStat)))
-            {
-                DailyCovidStat selectedStat = (DailyCovidStat)selectedItem;
-                var editContentDialog = new EditDailyStatContentDialog(selectedStat);
-
-                await editContentDialog.ShowAsync();
-
-            }
-        }
-    }
+ }
 }
