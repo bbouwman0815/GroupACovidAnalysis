@@ -321,7 +321,9 @@ namespace Covid19Analysis
             this.SummaryReport =
                 new SummaryReport(this.Region, this.FileLoader.LoadedCovidStats, this.LowerBound, this.UpperBound,
                     this.HistogramBinSize);
-            this.dataListView.ItemsSource = this.SummaryReport.RegionData[this.Region];
+            var regionalData = this.FileLoader.LoadedCovidStats.CreateRegionalDictionary(this.FileLoader.LoadedCovidStats.ToList());
+            regionalData[this.Region].Sort();
+            this.dataListView.ItemsSource = regionalData[this.Region];
         }
 
         private void clearSummary()

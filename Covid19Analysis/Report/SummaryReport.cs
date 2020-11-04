@@ -50,9 +50,9 @@ namespace Covid19Analysis.Report
         /// </value>
         public string Region { get; set; }
 
-        private Dictionary<string, List<DailyCovidStat>> RegionData { get; set; }
+        public Dictionary<string, List<DailyCovidStat>> RegionData { get; set; }
 
-        private Dictionary<string, List<DailyCovidStat>> MonthlyData { get; set; }
+        public Dictionary<string, List<DailyCovidStat>> MonthlyData { get; set; }
 
         /// <summary>
         ///     Gets or sets the number formatter.
