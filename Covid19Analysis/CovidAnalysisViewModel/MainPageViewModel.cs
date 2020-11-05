@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -38,13 +37,6 @@ namespace Covid19Analysis.CovidAnalysisViewModel
         /// </summary>
         public const int DefaultHistogramBinSize = 500;
 
-        /// <summary>
-        /// Gets or sets all statistics.
-        /// </summary>
-        /// <value>
-        /// All statistics.
-        /// </value>
-        public TotalCovidStats AllStatistics;
 
         private DailyCovidStat selectedStat;
         private ObservableCollection<DailyCovidStat> statistic;
@@ -268,8 +260,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
             this.SummaryReport = new SummaryReport(this.Region, this.Data, DefaultLowerBound,
                 DefaultUpperBound,
                 DefaultHistogramBinSize);
-            this.AllStatistics = new TotalCovidStats();
-            this.Statistics = this.AllStatistics.ToObservableCollection();
+            this.Statistics = this.Data.ToObservableCollection();
 
         }
 
@@ -293,33 +284,32 @@ namespace Covid19Analysis.CovidAnalysisViewModel
 
         private void loadCommands()
         {
-            this.DeleteCommand = new RelayCommand(this.DeleteStatistic, this.CanDeleteStatistic);
-            this.EditCommand = new RelayCommand(this.EditStatistic, this.CanEditStatistic);
+            this.DeleteCommand = new RelayCommand(this.deleteStatistic, this.canDeleteStatistic);
+            this.EditCommand = new RelayCommand(this.editStatistic, this.canEditStatistic);
             this.DisplayDetailsCommand =
-                new RelayCommand(this.DisplayStatisticDetails, this.CanDisplayStatisticDetails);
-            this.LoadFileCommand = new RelayCommand(this.LoadFile, this.CanLoadFile);
-            this.ClearAllDataCommand = new RelayCommand(this.ClearAllStatistics, this.CanClearAllStatistics);
-            this.DisplayErrorsCommand = new RelayCommand(DisplayErrors, CanDisplayErrors);
-            this.DisplaySummaryCommand = new RelayCommand(DisplaySummary, CanDisplaySummary);
-            this.SetHistogramCommand = new RelayCommand(SetHistogram, CanSetHistogram);
-            this.SetStateCommand = new RelayCommand(SetState, CanSetState);
-            this.SetLowerBoundCommand = new RelayCommand(SetLowerBound, CanSetLowerBound);
-            this.SetUpperBoundCommand = new RelayCommand(SetUpperBound, CanSetUpperBound);
-            this.SaveFileCommand = new RelayCommand(SaveFile, CanSaveFile);
-            this.AddStatisticCommand = new RelayCommand(AddStatistic, CanAddStatistic);
+                new RelayCommand(this.displayStatisticDetails, this.canDisplayStatisticDetails);
+            this.LoadFileCommand = new RelayCommand(this.loadFile, this.CanLoadFile);
+            this.ClearAllDataCommand = new RelayCommand(this.clearData, this.canClearData);
+            this.DisplayErrorsCommand = new RelayCommand(this.displayErrors, this.canDisplayErrors);
+            this.DisplaySummaryCommand = new RelayCommand(this.displaySummary, this.canDisplaySummary);
+            this.SetHistogramCommand = new RelayCommand(this.setHistogram, this.canSetHistogram);
+            this.SetStateCommand = new RelayCommand(this.setState, this.canSetState);
+            this.SetLowerBoundCommand = new RelayCommand(this.setLowerBound, this.canSetLowerBound);
+            this.SetUpperBoundCommand = new RelayCommand(this.setUpperBound, this.canSetUpperBound);
+            this.SaveFileCommand = new RelayCommand(this.saveFile, this.canSaveFile);
+            this.AddStatisticCommand = new RelayCommand(this.addStatistic, this.canAddStatistic);
         }
 
-        private bool CanAddStatistic(object obj)
+        private bool canAddStatistic(object obj)
         {
             return true;
         }
 
-        private async void AddStatistic(object obj)
+        private async void addStatistic(object obj)
         {
             var addNewDailyCovidStat = new AddDailyStatContentDialog();
 
             var result = await addNewDailyCovidStat.ShowAsync();
-            DailyCovidStat addedStat = null;
             if (result != ContentDialogResult.Primary)
             {
                 return;
@@ -332,36 +322,35 @@ namespace Covid19Analysis.CovidAnalysisViewModel
                 return;
             }
 
-            addedStat = addNewDailyCovidStat.AddedDailyCovidStat;
-            if (CheckMultipleMinMax.CheckSpecificDuplicate(addedStat, this.Data))
+            var addedStat = addNewDailyCovidStat.AddedDailyCovidStat;
+            if (CheckMultipleMinMax.CheckSpecificDuplicate(addedStat, this.Data.ToList()))
             {
                 this.handleAddWithDuplicates(addedStat);
             }
 
-            if (!CheckMultipleMinMax.CheckSpecificDuplicate(addedStat, this.Data))
+            if (!CheckMultipleMinMax.CheckSpecificDuplicate(addedStat, this.Data.ToList()))
             {
                 this.Data.Add(addedStat);
-                this.AllStatistics = this.Data;
                 this.updateSummary();
             }
 
         }
 
-        private bool CanSaveFile(object obj)
+        private bool canSaveFile(object obj)
         {
-            return this.AllStatistics.Count > 0 && this.Region != string.Empty;
+            return this.Data.Count > 0 && this.Region != string.Empty;
         }
 
-        private void SaveFile(object obj)
+        private void saveFile(object obj)
         {
-            var collectionToSave = CollectionFilters.FilterByRegion(this.Data, Region);
+            var collectionToSave = CollectionFilters.FilterByRegion(this.Data.ToList(), Region);
             var fileSaver = new FileSaver(collectionToSave);
             fileSaver.Initialize();
         }
 
-        private async void SetState(object obj)
+        private async void setState(object obj)
         {
-            var getRegion = new StateContentDialog(this.AllStatistics);
+            var getRegion = new StateContentDialog(this.Data);
 
             var result = await getRegion.ShowAsync();
 
@@ -383,7 +372,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
             }
         }
 
-        private async void SetHistogram(object obj)
+        private async void setHistogram(object obj)
         {
             var getBinSize = new HistogramBinContentDialog();
 
@@ -413,7 +402,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
             await errorDialog.ShowAsync();
         }
 
-        private async void SetLowerBound(object obj)
+        private async void setLowerBound(object obj)
         {
             var getLowerBound = new LowerBoundContentDialog();
 
@@ -426,7 +415,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
             }
         }
 
-        private async void SetUpperBound(object obj)
+        private async void setUpperBound(object obj)
         {
             var getUpperBound = new UpperBoundContentDialog();
 
@@ -439,59 +428,59 @@ namespace Covid19Analysis.CovidAnalysisViewModel
             }
         }
 
-        private async void DisplaySummary(object obj)
+        private async void displaySummary(object obj)
         {
             var displaySummary = new SummaryContentDialog(this.SummaryReport.GenerateDataForRegion());
 
             await displaySummary.ShowAsync();
         }
 
-        private bool CanSetUpperBound(object obj)
+        private bool canSetUpperBound(object obj)
         {
-            return this.AllStatistics.Count > 0;
+            return this.Data.Count > 0;
         }
 
-        private bool CanSetLowerBound(object obj)
+        private bool canSetLowerBound(object obj)
         {
-            return this.AllStatistics.Count > 0;
+            return this.Data.Count > 0;
         }
 
-        private bool CanSetState(object obj)
+        private bool canSetState(object obj)
         {
-            return this.AllStatistics.Count > 0;
+            return this.Data.Count > 0;
         }
 
-        private bool CanSetHistogram(object obj)
+        private bool canSetHistogram(object obj)
         {
-            return this.AllStatistics.Count > 0;
+            return this.Data.Count > 0;
         }
 
-        private bool CanDisplaySummary(object obj)
+        private bool canDisplaySummary(object obj)
         {
-            return this.AllStatistics.Count > 0;
+            return this.Data.Count > 0;
         }
 
-        private bool CanDisplayErrors(object obj)
+        private bool canDisplayErrors(object obj)
         {
-            return this.AllStatistics.Count > 0;
+            return this.Data.Count > 0;
         }
 
-        private void DisplayErrors(object obj)
+        private void displayErrors(object obj)
         {
             this.displayLineErrorDialog();
         }
 
-        private bool CanClearAllStatistics(object obj)
+        private bool canClearData(object obj)
         {
-            return this.AllStatistics.Count > 0;
+            return this.Data.Count > 0;
         }
 
-        private void ClearAllStatistics(object obj)
+        private void clearData(object obj)
         {
-            this.AllStatistics.Clear();
+            this.Data.Clear();
             this.Region = string.Empty;
             this.FileLoader.Errors = string.Empty;
-            this.Statistics = this.AllStatistics.ToObservableCollection();
+            this.Statistics = this.Data.ToObservableCollection();
         }
 
         private bool CanLoadFile(object obj)
@@ -499,43 +488,43 @@ namespace Covid19Analysis.CovidAnalysisViewModel
             return true;
         }
 
-        private bool CanDisplayStatisticDetails(object obj)
+        private bool canDisplayStatisticDetails(object obj)
         {
             return this.SelectedStat != null;
         }
 
-        private async void DisplayStatisticDetails(object obj)
+        private async void displayStatisticDetails(object obj)
         {
             var displayStatDetails = new DisplayStatDetailsContentDialog(this.SelectedStat.GetsFullFormattedString());
 
             await displayStatDetails.ShowAsync();
         }
 
-        private bool CanEditStatistic(object obj)
+        private bool canEditStatistic(object obj)
         {
             return this.SelectedStat != null;
         }
 
-        private async void EditStatistic(object obj)
+        private async void editStatistic(object obj)
         {
             var editContentDialog = new EditDailyStatContentDialog(this.SelectedStat);
 
             await editContentDialog.ShowAsync();
-            this.AllStatistics.Remove(this.SelectedStat);
+            this.Data.Remove(this.SelectedStat);
             this.SelectedStat = editContentDialog.EditedDailyCovidStat;
-            this.AllStatistics.Add(SelectedStat);
+            this.Data.Add(SelectedStat);
             this.updateSummary();
         }
 
-        private bool CanDeleteStatistic(object obj)
+        private bool canDeleteStatistic(object obj)
         {
             return this.SelectedStat != null;
         }
 
-        private void DeleteStatistic(object obj)
+        private void deleteStatistic(object obj)
         {
-            this.AllStatistics.Remove(this.SelectedStat);
-            this.Statistics = this.AllStatistics.ToObservableCollection();
+            this.Data.Remove(this.SelectedStat);
+            this.Statistics = this.Data.ToObservableCollection();
         }
 
         [NotifyPropertyChangedInvocator]
@@ -544,15 +533,15 @@ namespace Covid19Analysis.CovidAnalysisViewModel
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void LoadFile(object obj)
+        private void loadFile(object obj)
         {
             this.FileLoader.DuplicateData.Clear();
-            if (this.AllStatistics.ContainsData())
+            if (this.Data.ContainsData())
             {
                 this.displayExistingFileDialog();
             }
 
-            if (!this.AllStatistics.ContainsData())
+            if (!this.Data.ContainsData())
             {
                 this.loadAndReadFile();
             }
@@ -601,7 +590,6 @@ namespace Covid19Analysis.CovidAnalysisViewModel
             fileContent = fileContent.Replace("\r", string.Empty);
 
             this.FileLoader.LoadFile(fileContent);
-            this.AllStatistics = this.Data;
             this.handleDuplicateDays();
             this.updateSummary();
         }
@@ -623,7 +611,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
             if (result == ContentDialogResult.Primary)
             {
                 this.Data.Clear();
-                this.AllStatistics.Clear();
+                this.Data.Clear();
                 this.loadAndReadFile();
             }
 
@@ -648,7 +636,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
 
                     if (existingCovidDay.Result == Result.Replace)
                     {
-                        this.AllStatistics.ReplaceDuplicate(currentDay);
+                        this.Data.ReplaceDuplicate(currentDay);
                         this.FileLoader.DuplicateData.Remove(currentDay);
                     }
 
@@ -678,7 +666,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
         {
             foreach (var currentDuplicate in this.FileLoader.DuplicateData.ToList())
             {
-                this.AllStatistics.ReplaceDuplicate(currentDuplicate);
+                this.Data.ReplaceDuplicate(currentDuplicate);
                 this.FileLoader.DuplicateData.Remove(currentDuplicate);
             }
         }
@@ -697,13 +685,13 @@ namespace Covid19Analysis.CovidAnalysisViewModel
         private void updateSummary()
         {
             this.SummaryReport =
-                new SummaryReport(this.Region, this.AllStatistics, this.LowerBound, this.UpperBound,
+                new SummaryReport(this.Region, this.Data, this.LowerBound, this.UpperBound,
                     this.HistogramBinSize);
             var regionalData =
-                this.AllStatistics.CreateRegionalDictionary(this.AllStatistics.ToList());
+                this.Data.CreateRegionalDictionary(this.Data.ToList());
             if (this.Region == String.Empty)
             {
-                this.Statistics = this.AllStatistics.ToObservableCollection();
+                this.Statistics = this.Data.ToObservableCollection();
             }
             else
             {
@@ -742,7 +730,7 @@ private async void displayStateError()
 
             if (duplicateStatContentDialog.Result == Result.Replace)
             {
-                this.AllStatistics.ReplaceDuplicate(addedStat);
+                this.Data.ReplaceDuplicate(addedStat);
                 this.updateSummary();
             }
         }
