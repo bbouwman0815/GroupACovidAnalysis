@@ -129,7 +129,7 @@ namespace Covid19Analysis.Utility
         {
             foreach (var currentDay in this.Data)
             {
-                this.DataInCsvForm += currentDay.Date.ToString("yyyyMMdd");
+                this.DataInCsvForm += currentDay.Date.ToString("yyyy/MM/dd");
                 this.DataInCsvForm += Comma;
 
                 this.DataInCsvForm += currentDay.Region;
@@ -141,10 +141,14 @@ namespace Covid19Analysis.Utility
                 this.DataInCsvForm += currentDay.NegativeIncrease;
                 this.DataInCsvForm += Comma;
 
-                this.DataInCsvForm += currentDay.DeathIncrease;
+                this.DataInCsvForm += currentDay.HospitalizedCurrently;
                 this.DataInCsvForm += Comma;
 
                 this.DataInCsvForm += currentDay.HospitalizedIncrease;
+                this.DataInCsvForm += Comma;
+
+                this.DataInCsvForm += currentDay.DeathIncrease;
+
                 this.DataInCsvForm += Environment.NewLine;
             }
         }

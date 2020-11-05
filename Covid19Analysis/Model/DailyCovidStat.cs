@@ -10,6 +10,13 @@ namespace Covid19Analysis.Model
         #region Properties
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DailyCovidStat"/> class.
+        /// </summary>
+        public DailyCovidStat()
+        {
+        }
+
+        /// <summary>
         ///     Gets or sets the Date.
         /// </summary>
         /// <value>
