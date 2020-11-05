@@ -194,6 +194,8 @@ namespace Covid19Analysis.Model
                 regionalData.TryAdd(currentDay.Region, new List<DailyCovidStat>());
             }
 
+            regionalData.TryAdd("All", new List<DailyCovidStat>());
+
             var regions = regionalData.Keys.ToArray();
 
             return regions;
@@ -215,6 +217,11 @@ namespace Covid19Analysis.Model
             {
                 var regionalData = this.CovidData.Where(currentDay => t.Equals(currentDay.Region)).ToList();
                 dictionary.TryAdd(t, regionalData);
+            }
+
+            foreach (var currentDay in data)
+            {
+                dictionary["All"].Add(currentDay);
             }
 
             return dictionary;

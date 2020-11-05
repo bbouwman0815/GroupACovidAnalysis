@@ -17,8 +17,6 @@ namespace Covid19Analysis.Utility
     {
         #region Data members
 
-        public const string FilenameXmlSerialization = "covidStat.xml";
-
         /// <summary>
         ///     The comma
         /// </summary>
@@ -90,12 +88,9 @@ namespace Covid19Analysis.Utility
                 {
                     var outstream = await file.OpenStreamForWriteAsync();
                     var writer =
-                        new XmlSerializer(typeof(DailyCovidStat));
-
-                    foreach (var currentDay in this.Data)
-                    {
-                        writer.Serialize(outstream, currentDay);
-                    }
+                        new XmlSerializer(typeof(List<DailyCovidStat>));
+                    writer.Serialize(outstream, this.Data);
+                
                     outstream.Close();
                 }
                 else

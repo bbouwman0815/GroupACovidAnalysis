@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Xml;
+using System.Xml.Serialization;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml.Controls;
@@ -36,6 +39,11 @@ namespace Covid19Analysis.CovidAnalysisViewModel
         ///     The default histogram bin size
         /// </summary>
         public const int DefaultHistogramBinSize = 500;
+
+        /// <summary>
+        /// The comma
+        /// </summary>
+        public const string Comma = ",";
 
 
         private DailyCovidStat selectedStat;
@@ -562,6 +570,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
 
             fileOpener.FileTypeFilter.Add(".csv");
             fileOpener.FileTypeFilter.Add(".txt");
+            fileOpener.FileTypeFilter.Add(".xml");
 
             return fileOpener;
         }
@@ -579,19 +588,66 @@ namespace Covid19Analysis.CovidAnalysisViewModel
         private async void processFile(StorageFile selectedFile)
         {
             string fileContent;
+        
             var fileToRead = await selectedFile.OpenAsync(FileAccessMode.Read);
-            _ = new FileInfo(selectedFile.Path);
-
-            using (var streamReader = new StreamReader(fileToRead.AsStream()))
+            if (selectedFile.FileType == ".xml")
             {
-                fileContent = await streamReader.ReadToEndAsync();
+                XmlSerializer deserializer = new XmlSerializer(typeof(DailyCovidStat[]));
+                var xmlFileStream = await selectedFile.OpenStreamForWriteAsync();
+                var xmlData = (DailyCovidStat[])deserializer.Deserialize(xmlFileStream);
+                var xmlDataList = xmlData.ToList();
+                var xmlStringData = this.handleXmlDataLoad(xmlDataList);
+                this.FileLoader.LoadFile(xmlStringData);
+                this.handleDuplicateDays();
+                this.updateSummary();
+            }
+            else
+            {
+                _ = new FileInfo(selectedFile.Path);
+
+                using (var streamReader = new StreamReader(fileToRead.AsStream()))
+                {
+                    fileContent = await streamReader.ReadToEndAsync();
+                }
+
+                fileContent = fileContent.Replace("\r", string.Empty);
+
+                this.FileLoader.LoadFile(fileContent);
+                this.handleDuplicateDays();
+                this.updateSummary();
+            }
+        }
+
+        private string handleXmlDataLoad(IList<DailyCovidStat> data)
+        {
+            var summary = string.Empty;
+            foreach (var currentDay in data)
+            {
+               
+                    summary += currentDay.Date.ToString("yyyy/MM/dd");
+                    summary += Comma;
+
+                    summary += currentDay.Region;
+                    summary += Comma;
+
+                    summary += currentDay.PositiveIncrease;
+                    summary += Comma;
+
+                    summary += currentDay.NegativeIncrease;
+                    summary += Comma;
+
+                    summary += currentDay.HospitalizedCurrently;
+                    summary += Comma;
+
+                    summary += currentDay.HospitalizedIncrease;
+                    summary += Comma;
+
+                    summary += currentDay.DeathIncrease;
+
+                    summary += Environment.NewLine;
             }
 
-            fileContent = fileContent.Replace("\r", string.Empty);
-
-            this.FileLoader.LoadFile(fileContent);
-            this.handleDuplicateDays();
-            this.updateSummary();
+            return summary;
         }
 
         private void handleDuplicateDays()
