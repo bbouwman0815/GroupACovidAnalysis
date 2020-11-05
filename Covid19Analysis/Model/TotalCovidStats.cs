@@ -29,6 +29,7 @@ namespace Covid19Analysis.Model
 
         #region Constructors
 
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="TotalCovidStats" /> class.
         /// </summary>

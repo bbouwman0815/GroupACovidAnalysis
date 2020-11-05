@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
@@ -13,6 +16,8 @@ namespace Covid19Analysis.Utility
     public class FileSaver
     {
         #region Data members
+
+        public const string FilenameXmlSerialization = "covidStat.xml";
 
         /// <summary>
         ///     The comma
@@ -57,6 +62,7 @@ namespace Covid19Analysis.Utility
         /// <param name="data">The Data.</param>
         public FileSaver(IEnumerable<DailyCovidStat> data)
         {
+            this.DataInCsvForm = string.Empty;
             this.Data = data;
             this.FileSaved = false;
         }
@@ -75,22 +81,48 @@ namespace Covid19Analysis.Utility
 
             savePicker.FileTypeChoices.Add("Text", new List<string> {".txt"});
             savePicker.FileTypeChoices.Add("CSV", new List<string> {".csv"});
+            savePicker.FileTypeChoices.Add("XML", new List<string> { ".xml" });
 
             savePicker.SuggestedFileName = "New Document";
             var file = await savePicker.PickSaveFileAsync();
             if (file != null)
             {
-                CachedFileManager.DeferUpdates(file);
-
-                await FileIO.WriteTextAsync(file, this.DataInCsvForm);
-
-                var status =
-                    await CachedFileManager.CompleteUpdatesAsync(file);
-                if (status == FileUpdateStatus.Complete)
+                if (file.FileType == ".xml")
                 {
-                    this.FileSaved = true;
+                    this.handleXmlSave(file.Path);
+                }
+                else
+                {
+                    CachedFileManager.DeferUpdates(file);
+
+                    await FileIO.WriteTextAsync(file, this.DataInCsvForm);
+
+                    var status =
+                        await CachedFileManager.CompleteUpdatesAsync(file);
+                    if (status == FileUpdateStatus.Complete)
+                    {
+                        this.FileSaved = true;
+                    }
                 }
             }
+        }
+
+        private async void handleXmlSave(string fileName)
+        {
+            var folder = ApplicationData.Current.LocalFolder;
+            var file = await folder.CreateFileAsync(FilenameXmlSerialization, CreationCollisionOption.ReplaceExisting);
+            var outStream = await file.OpenStreamForWriteAsync();
+
+            var serializer = new XmlSerializer(typeof(DailyCovidStat));
+            using (outStream)
+            {
+                foreach (var currentDay in this.Data)
+                {
+                    serializer.Serialize(outStream, currentDay);
+                }
+            }
+
+            outStream.Dispose();
         }
 
         private void formatCollectionForSave()

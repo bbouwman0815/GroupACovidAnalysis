@@ -176,9 +176,8 @@ namespace Covid19Analysis.Model
         /// <returns>
         /// The full formatted string for the statistic
         /// </returns>
-        public String GetsFullFormattedString() 
+        public string GetsFullFormattedString() 
         {
-
             var statisticDetails = string.Empty;
 
             statisticDetails += $"Date: {this.Date.ToShortDateString()}";
