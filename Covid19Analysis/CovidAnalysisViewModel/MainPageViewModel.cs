@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -119,6 +120,8 @@ namespace Covid19Analysis.CovidAnalysisViewModel
         ///     The file loader.
         /// </value>
         public FileLoader FileLoader { get; }
+
+        private TotalCovidStats Data => this.FileLoader.LoadedCovidStats;
 
         /// <summary>
         /// Gets or sets the statistics.
@@ -262,7 +265,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
             this.initializeDefaultValues();
             this.loadCommands();
             this.FileLoader = new FileLoader();
-            this.SummaryReport = new SummaryReport(this.Region, this.FileLoader.LoadedCovidStats, DefaultLowerBound,
+            this.SummaryReport = new SummaryReport(this.Region, this.Data, DefaultLowerBound,
                 DefaultUpperBound,
                 DefaultHistogramBinSize);
             this.AllStatistics = new TotalCovidStats();
@@ -330,15 +333,15 @@ namespace Covid19Analysis.CovidAnalysisViewModel
             }
 
             addedStat = addNewDailyCovidStat.AddedDailyCovidStat;
-            if (CheckMultipleMinMax.CheckSpecificDuplicate(addedStat, this.FileLoader.LoadedCovidStats.ToList()))
+            if (CheckMultipleMinMax.CheckSpecificDuplicate(addedStat, this.Data))
             {
                 this.handleAddWithDuplicates(addedStat);
             }
 
-            if (!CheckMultipleMinMax.CheckSpecificDuplicate(addedStat, this.FileLoader.LoadedCovidStats.ToList()))
+            if (!CheckMultipleMinMax.CheckSpecificDuplicate(addedStat, this.Data))
             {
-                this.FileLoader.LoadedCovidStats.Add(addedStat);
-                this.AllStatistics.Add(addedStat);
+                this.Data.Add(addedStat);
+                this.AllStatistics = this.Data;
                 this.updateSummary();
             }
 
@@ -346,12 +349,12 @@ namespace Covid19Analysis.CovidAnalysisViewModel
 
         private bool CanSaveFile(object obj)
         {
-            return this.AllStatistics.Count > 0;
+            return this.AllStatistics.Count > 0 && this.Region != string.Empty;
         }
 
         private void SaveFile(object obj)
         {
-            var collectionToSave = CollectionFilters.FilterByRegion(this.FileLoader.LoadedCovidStats.ToList(), Region);
+            var collectionToSave = CollectionFilters.FilterByRegion(this.Data, Region);
             var fileSaver = new FileSaver(collectionToSave);
             fileSaver.Initialize();
         }
@@ -365,7 +368,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
             if (result == ContentDialogResult.Primary)
             {
                 var regionalData =
-                    this.FileLoader.LoadedCovidStats.CreateRegionalDictionary(this.FileLoader.LoadedCovidStats
+                    this.Data.CreateRegionalDictionary(this.Data
                         .ToList());
                 if (!regionalData.ContainsKey(getRegion.Region))
                 {
@@ -598,7 +601,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
             fileContent = fileContent.Replace("\r", string.Empty);
 
             this.FileLoader.LoadFile(fileContent);
-            this.AllStatistics = this.FileLoader.LoadedCovidStats;
+            this.AllStatistics = this.Data;
             this.handleDuplicateDays();
             this.updateSummary();
         }
@@ -619,7 +622,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
 
             if (result == ContentDialogResult.Primary)
             {
-                this.FileLoader.LoadedCovidStats.Clear();
+                this.Data.Clear();
                 this.AllStatistics.Clear();
                 this.loadAndReadFile();
             }

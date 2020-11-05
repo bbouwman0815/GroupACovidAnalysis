@@ -79,7 +79,6 @@ namespace Covid19Analysis.Utility
             this.formatCollectionForSave();
             var savePicker = new FileSavePicker {SuggestedStartLocation = PickerLocationId.DocumentsLibrary};
 
-            savePicker.FileTypeChoices.Add("Text", new List<string> {".txt"});
             savePicker.FileTypeChoices.Add("CSV", new List<string> {".csv"});
             savePicker.FileTypeChoices.Add("XML", new List<string> { ".xml" });
 
@@ -89,7 +88,15 @@ namespace Covid19Analysis.Utility
             {
                 if (file.FileType == ".xml")
                 {
-                    this.handleXmlSave(file.Path);
+                    var outstream = await file.OpenStreamForWriteAsync();
+                    var writer =
+                        new XmlSerializer(typeof(DailyCovidStat));
+
+                    foreach (var currentDay in this.Data)
+                    {
+                        writer.Serialize(outstream, currentDay);
+                    }
+                    outstream.Close();
                 }
                 else
                 {
@@ -105,24 +112,6 @@ namespace Covid19Analysis.Utility
                     }
                 }
             }
-        }
-
-        private async void handleXmlSave(string fileName)
-        {
-            var folder = ApplicationData.Current.LocalFolder;
-            var file = await folder.CreateFileAsync(FilenameXmlSerialization, CreationCollisionOption.ReplaceExisting);
-            var outStream = await file.OpenStreamForWriteAsync();
-
-            var serializer = new XmlSerializer(typeof(DailyCovidStat));
-            using (outStream)
-            {
-                foreach (var currentDay in this.Data)
-                {
-                    serializer.Serialize(outStream, currentDay);
-                }
-            }
-
-            outStream.Dispose();
         }
 
         private void formatCollectionForSave()
