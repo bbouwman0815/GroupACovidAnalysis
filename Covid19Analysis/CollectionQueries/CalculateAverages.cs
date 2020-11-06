@@ -94,7 +94,6 @@ namespace Covid19Analysis.CollectionQueries
             var newestDay = FindMinMax.FindNewestPositiveCase(data);
 
             var timeDifference = (newestDay.Date - oldestDay.Date).Days;
-            timeDifference++;
 
             return timeDifference;
         }
