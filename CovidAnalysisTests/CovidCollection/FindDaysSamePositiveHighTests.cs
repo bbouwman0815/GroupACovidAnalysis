@@ -4,7 +4,7 @@ using Covid19Analysis.CollectionQueries;
 using Covid19Analysis.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace CovidAnalysisTests
+namespace CovidAnalysisTests.CovidCollection
 {
     /// Input (A collection with multiple max positive test) |Expected Output (Number of days in the collection with the same max positive tests)
     /// Input: EmptyCollection                               |OutPut: ArgumentOutOfRangeException

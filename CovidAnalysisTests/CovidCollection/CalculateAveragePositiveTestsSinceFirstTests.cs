@@ -4,7 +4,7 @@ using Covid19Analysis.CollectionQueries;
 using Covid19Analysis.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace CovidAnalysisTests
+namespace CovidAnalysisTests.CovidCollection
 {
     /// Input (A collection of covid stats) |Expected value : The correct average for the given set of days
     /// Input: EmptyCollection              |OutPut: ArgumentOutOfRangeException

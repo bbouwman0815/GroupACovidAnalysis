@@ -2,7 +2,7 @@
 using Covid19Analysis.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace CovidAnalysisTests
+namespace CovidAnalysisTests.CovidCollection
 {
     /// <summary>
     ///     Input (Collection with a set number of items) |Expected Value (the resulting number of items in the collection)

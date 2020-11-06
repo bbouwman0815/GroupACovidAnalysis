@@ -3,7 +3,7 @@ using Covid19Analysis.CollectionQueries;
 using Covid19Analysis.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace CovidAnalysisTests
+namespace CovidAnalysisTests.CovidCollection
 {
     /// Input ({positive tests} in a collection of covid stats |Expected Value (Number of stats with positive tests below that threshold
     /// Input: EmptyCollection                                 |Output: ArgumentOutOfRangeException

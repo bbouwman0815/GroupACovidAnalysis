@@ -2,7 +2,7 @@
 using Covid19Analysis.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace CovidAnalysisTests
+namespace CovidAnalysisTests.CovidCollection
 {
     /// <summary>
     ///     Test Cases
@@ -21,10 +21,8 @@ namespace CovidAnalysisTests
         {
             var data = new TotalCovidStats();
 
-            DailyCovidStat day = null;
-
             Assert.ThrowsException<NullReferenceException>(
-                () => data.Add(day)
+                () => data.Add(null)
             );
         }
 

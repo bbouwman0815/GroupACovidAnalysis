@@ -5,15 +5,14 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Xml;
 using System.Xml.Serialization;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml.Controls;
-using Covid19Analysis.Annotations;
 using Covid19Analysis.CollectionQueries;
 using Covid19Analysis.Extensions;
 using Covid19Analysis.Model;
+using Covid19Analysis.Properties;
 using Covid19Analysis.Report;
 using Covid19Analysis.Utility;
 using Covid19Analysis.View;
@@ -39,6 +38,8 @@ namespace Covid19Analysis.CovidAnalysisViewModel
         ///     The default histogram bin size
         /// </summary>
         public const int DefaultHistogramBinSize = 500;
+
+        public const string DefaultRegion = "All";
 
         /// <summary>
         /// The comma
@@ -275,7 +276,7 @@ namespace Covid19Analysis.CovidAnalysisViewModel
         private void initializeDefaultValues()
         {
             this.HistogramBinSize = DefaultHistogramBinSize;
-            this.Region = String.Empty;
+            this.Region = DefaultRegion;
             this.LowerBound = DefaultLowerBound;
             this.UpperBound = DefaultUpperBound;
         }
@@ -754,10 +755,10 @@ namespace Covid19Analysis.CovidAnalysisViewModel
                 regionalData[this.Region].Sort();
                 this.Statistics = regionalData[this.Region].ToObservableCollection();
             }
-    }
+        }
 
 
-private async void displayStateError()
+        private async void displayStateError()
         {
             var stateDialog = new ContentDialog
             {

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Covid19Analysis.Extensions
 {
+    /// <summary>
+    /// The class List Extensions
+    /// </summary>
     public static class ListExtensions
     {
         /// <summary>

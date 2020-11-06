@@ -4,7 +4,7 @@ using Covid19Analysis.CollectionQueries;
 using Covid19Analysis.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace CovidAnalysisTests
+namespace CovidAnalysisTests.CovidCollection
 {
     /// Input ({Positive tests} in a covid statistics List) |Expected value (The highest positive test in the collections
     /// Input: {}                                           |OutPut: ArgumentOutOfRangeException

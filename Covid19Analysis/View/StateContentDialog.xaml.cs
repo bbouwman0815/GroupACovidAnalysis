@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Windows.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml.Controls;
 using Covid19Analysis.Model;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -17,7 +15,13 @@ namespace Covid19Analysis.View
         /// </summary>
         public string Region;
 
-        public TotalCovidStats regions { get; }
+        /// <summary>
+        /// Gets the regions.
+        /// </summary>
+        /// <value>
+        /// The regions.
+        /// </value>
+        public TotalCovidStats Regions { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StateContentDialog"/> class.
@@ -25,14 +29,14 @@ namespace Covid19Analysis.View
         public StateContentDialog(TotalCovidStats data)
         {
             this.InitializeComponent();
-            this.regions = data;
+            this.Regions = data;
             var itemCollection = this.stateComboBox.Items;
             if (itemCollection != null)
             {
-                var availableRegions = TotalCovidStats.FindRegions(this.regions);
-                for (var i = 0; i < availableRegions.Length; i++)
+                var availableRegions = TotalCovidStats.FindRegions(this.Regions);
+                foreach (var region in availableRegions)
                 {
-                    itemCollection.Add(availableRegions[i]);
+                    itemCollection.Add(region);
                 }
             }
         }

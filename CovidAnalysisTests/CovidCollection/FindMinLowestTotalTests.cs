@@ -4,7 +4,7 @@ using Covid19Analysis.CollectionQueries;
 using Covid19Analysis.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace CovidAnalysisTests
+namespace CovidAnalysisTests.CovidCollection
 {
     /// Input ({total tests} of the item in the collection of covid stat) |Expected value (Lowest amount of total test in the collection
     /// Input: {}                                                         |OutPut: ArgumentOutOfRangeException

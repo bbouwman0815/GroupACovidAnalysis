@@ -4,7 +4,7 @@ using Covid19Analysis.CollectionQueries;
 using Covid19Analysis.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace CovidAnalysisTests
+namespace CovidAnalysisTests.CovidCollection
 {
     /// Input ({Positive tests / total Tests} int Daily covid Stat |Expected Output (Positivity Rate)
     /// Input: {}                                                  |OutPut: ArgumentOutOfRangeException

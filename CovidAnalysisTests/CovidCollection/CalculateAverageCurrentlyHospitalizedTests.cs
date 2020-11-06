@@ -4,7 +4,7 @@ using Covid19Analysis.CollectionQueries;
 using Covid19Analysis.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace CovidAnalysisTests
+namespace CovidAnalysisTests.CovidCollection
 {
     /// Input ({hospitalized} in  statistics list| Expected Output Th average of hospitalized values
     /// Input: {}                                | OutPut: ArgumentOutOfRangeException
